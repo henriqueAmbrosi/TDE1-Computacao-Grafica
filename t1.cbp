@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="t1" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/t1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="`pkg-config sdl2 --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL2" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/t1" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="SDL2.dll" />
+		<Unit filename="bin/Debug/t1" />
+		<Unit filename="include/BezierCurve.h" />
+		<Unit filename="include/Circle.h" />
+		<Unit filename="include/Color.h" />
+		<Unit filename="include/Context.h" />
+		<Unit filename="include/FloodFill.h" />
+		<Unit filename="include/Line.h" />
+		<Unit filename="include/Point.h" />
+		<Unit filename="include/Polygon.h" />
+		<Unit filename="include/Rectangle.h" />
+		<Unit filename="include/Shape.h" />
+		<Unit filename="main.cpp" />
+		<Unit filename="obj/Debug/main.o" />
+		<Unit filename="obj/Debug/src/BezierCurve.o" />
+		<Unit filename="obj/Debug/src/Circle.o" />
+		<Unit filename="obj/Debug/src/Color.o" />
+		<Unit filename="obj/Debug/src/Context.o" />
+		<Unit filename="obj/Debug/src/Line.o" />
+		<Unit filename="obj/Debug/src/Point.o" />
+		<Unit filename="obj/Debug/src/Polygon.o" />
+		<Unit filename="obj/Debug/src/Rectangle.o" />
+		<Unit filename="src/BezierCurve.cpp" />
+		<Unit filename="src/Circle.cpp" />
+		<Unit filename="src/Color.cpp" />
+		<Unit filename="src/Context.cpp" />
+		<Unit filename="src/FloodFill.cpp" />
+		<Unit filename="src/Line.cpp" />
+		<Unit filename="src/Point.cpp" />
+		<Unit filename="src/Polygon.cpp" />
+		<Unit filename="src/Rectangle.cpp" />
+		<Unit filename="src/Shape.cpp" />
+		<Unit filename="t1.depend" />
+		<Unit filename="t1.layout" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
