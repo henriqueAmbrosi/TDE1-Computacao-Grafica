@@ -10,7 +10,7 @@ Shape::Shape()
     buildRotateAndScaleMatrix();
 }
 
-Shape::Shape(Point translation, const float scale[2], float rotation)
+Shape::Shape(Point translation, float scale[2], float rotation)
 {
     this->translation = translation;
     this->scale[0] = scale[0];
@@ -59,7 +59,7 @@ void Shape::setRotation(float rotation)
     buildRotateAndScaleMatrix();
 }
 
-void Shape::setScale(const float scale[2])
+void Shape::setScale(float scale[2])
 {
     this->scale[0] = scale[0];
     this->scale[1] = scale[1];
@@ -76,12 +76,12 @@ float Shape::getRotation()
     return this->rotation;
 }
 
-const float* Shape::getScale() const
+float* Shape::getScale()
 {
     return this->scale;
 }
 
-void Shape::multiplyMatrix3x3(const float A[3][3], const float B[3][3], float result[3][3]) {
+void Shape::multiplyMatrix3x3(float A[3][3], float B[3][3], float result[3][3]) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
             result[i][j] = 0.0f;
@@ -92,11 +92,26 @@ void Shape::multiplyMatrix3x3(const float A[3][3], const float B[3][3], float re
     }
 }
 
-std::list<Point> Shape::transform(const std::list<Point>& points)
+/**
+ * The first point of the list will be the used as pivot for the rotation
+ */
+std::list<Point> Shape::transform(std::list<Point>& points)
 {
     std::list<Point> transformedPoints;
 
-    // Correção: Acessando x e y de translation via métodos públicos e convertendo para float
+    if (points.empty()) {
+        return transformedPoints;
+    }
+
+    Point basePoint = Point(points.front().getX(), points.front().getY());
+
+    return transform(points, basePoint);
+}
+
+std::list<Point> Shape::transform(std::list<Point>& points, Point pivot)
+{
+    std::list<Point> transformedPoints;
+
     float translationMatrix[3][3] = {
         {1.0f, 0.0f, static_cast<float>(translation.getX())},
         {0.0f, 1.0f, static_cast<float>(translation.getY())},
@@ -105,14 +120,16 @@ std::list<Point> Shape::transform(const std::list<Point>& points)
 
     float transformMatrix[3][3];
     multiplyMatrix3x3(translationMatrix, rotateAndScaleMatrix, transformMatrix);
-
-    // Nota: Removido o 'const' daqui temporariamente para corrigir o erro caso você não queira alterar o Point.h agora.
-    // O ideal é manter const e aplicar o passo 2 abaixo!
+    
     for (Point p : points) {
         Point newP;
 
-        int nextX = transformMatrix[0][0] * p.getX() + transformMatrix[0][1] * p.getY() + transformMatrix[0][2] * 1.0f;
-        int nextY = transformMatrix[1][0] * p.getX() + transformMatrix[1][1] * p.getY() + transformMatrix[1][2] * 1.0f;
+        int x, y;
+        x = p.getX() - pivot.getX();
+        y = p.getY() - pivot.getY();
+
+        int nextX = transformMatrix[0][0] * x + transformMatrix[0][1] * y + transformMatrix[0][2] * 1.0f;
+        int nextY = transformMatrix[1][0] * x + transformMatrix[1][1] * y + transformMatrix[1][2] * 1.0f;
 
         newP.setX(nextX);
         newP.setY(nextY);
