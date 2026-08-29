@@ -12,7 +12,7 @@ Rectangle::Rectangle(Point start, Point end, Color color) {
     this->antialias = 0;
 }
 
-Rectangle::Rectangle(Point start, Point end, int antialias) {
+Rectangle::Rectangle(Point start, Point end, Color color, int antialias) {
     this->start = start;
     this->end = end;
     this->color = color;

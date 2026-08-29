@@ -1,0 +1,57 @@
+[
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c main.cpp",
+    "file": "main.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/BezierCurve.cpp",
+    "file": "src/BezierCurve.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Circle.cpp",
+    "file": "src/Circle.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Color.cpp",
+    "file": "src/Color.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Context.cpp",
+    "file": "src/Context.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/FloodFill.cpp",
+    "file": "src/FloodFill.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Line.cpp",
+    "file": "src/Line.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Point.cpp",
+    "file": "src/Point.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Polygon.cpp",
+    "file": "src/Polygon.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Rectangle.cpp",
+    "file": "src/Rectangle.cpp"
+  },
+  {
+    "directory": "/home/bruno/Documentos/UCS/computacao_grafica/TDE1-Computacao-Grafica",
+    "command": "g++ -I/usr/include/SDL2 -D_GNU_SOURCE=1 -D_REENTRANT -Wall -Wextra -Iinclude -c src/Shape.cpp",
+    "file": "src/Shape.cpp"
+  }
+]

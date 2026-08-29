@@ -68,17 +68,9 @@ int main(int argc, char* args[])
 														640, 480,
 												SDL_WINDOW_SHOWN);
 
-		// if the window creation succeeded create our renderer
-		if (pWindow != 0) {
-			pRenderer = SDL_CreateRenderer(pWindow, -1, 0);
-			window_surface = SDL_GetWindowSurface(pWindow);
 
-            // Inicializa o contexto gráfico da aplicação
-			Context * context = Context::getInstance();
-			context->setRenderer(pRenderer);
-			context->setWindowSurface(window_surface);
-
-        }
+        window_surface = SDL_GetWindowSurface(pWindow);
+		Context::getInstance()->setWindowSurface(window_surface);
 
 	}
 	else
