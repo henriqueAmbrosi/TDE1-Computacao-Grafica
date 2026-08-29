@@ -8,6 +8,7 @@
 #include<Point.h>
 #include<Line.h>
 #include<Rectangle.h>
+#include<Polygon.h>
 
 
 // SDL stuff
@@ -24,13 +25,20 @@ void display()
 
     Point p1 = Point(110,110);
     Point p2 = Point(10,10);
+    Point p3 = Point(110,10);
+
+    std::list<Point> points = {p1, p2, p3};
+
+    Polygon poly = Polygon(points ,color);
+    Point p = Point(offset, offset);
+
+    poly.setTranslation(p);
+    poly.setScale(1.0f + offset/45.0f, 1);
+    poly.draw();
 
     Rectangle rect = Rectangle(p1, p2, color);
 
     rect.setRotation(offset);
-    Point p = Point(offset, offset);
-    rect.setTranslation(p);
-    rect.setScale(1.0f + offset/45, 1);
     rect.draw();
 
     if (offset == 360) {
