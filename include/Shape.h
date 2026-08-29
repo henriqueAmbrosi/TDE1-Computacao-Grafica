@@ -1,6 +1,7 @@
 #ifndef SHAPE_H
 #define SHAPE_H
 #include "Point.h"
+#include "Color.h"
 #include <list>
 
 class Shape
@@ -17,8 +18,11 @@ class Shape
         float getRotation();
         float* getScale();
 
+        
         // Abstract interface
         virtual void draw() = 0;
+        virtual void drawBoundary(Color color) = 0;
+        virtual bool isInBoundary(Point point) = 0;
 
         virtual ~Shape();
 

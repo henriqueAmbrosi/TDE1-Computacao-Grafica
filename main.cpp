@@ -23,22 +23,23 @@ void display()
 
     Color color = Color(255,0,0);
 
-    Point p1 = Point(110,110);
-    Point p2 = Point(10,10);
-    Point p3 = Point(110,10);
+    Point p1 = Point(100,100);
+    Point p2 = Point(200,200);
 
-    std::list<Point> points = {p1, p2, p3};
+    // std::list<Point> points = {p1, p2, p3};
 
-    Polygon poly = Polygon(points ,color);
+    // Polygon poly = Polygon(points, color);
     Point p = Point(offset, offset);
 
-    poly.setTranslation(p);
-    poly.setScale(1.0f + offset/45.0f, 1);
-    poly.draw();
-
+    // poly.setTranslation(p);
+    // poly.draw();
+    
     Rectangle rect = Rectangle(p1, p2, color);
-
-    rect.setRotation(offset);
+    
+    rect.setRotation(45);
+    rect.setTranslation(p);
+    rect.setScale(1.0f + offset/45.0f, 1);
+    rect.drawBoundary(Color(0, 0, 255));
     rect.draw();
 
     if (offset == 360) {
