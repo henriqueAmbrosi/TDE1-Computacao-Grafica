@@ -7,6 +7,7 @@
 #include<Color.h>
 #include<Point.h>
 #include<Line.h>
+#include<Rectangle.h>
 
 
 // SDL stuff
@@ -14,31 +15,29 @@ SDL_Window* pWindow = nullptr;
 SDL_Renderer* pRenderer = nullptr;
 SDL_Surface * window_surface = nullptr;
 
-int offset = 10;
+int offset = 0;
 
 void display()
 {
 
     Color color = Color(255,0,0);
 
-    Point p1 = Point(600-offset,400);
-    Point p2 = Point(10+offset,10);
+    Point p1 = Point(110,110);
+    Point p2 = Point(10,10);
 
-    Line l1 = Line(p1, p2, color);
-    l1.draw();
+    Rectangle rect = Rectangle(p1, p2, color);
 
-    Point p3 = Point(600-offset,430);
-    Point p4 = Point(10+offset,40);
+    rect.setRotation(offset);
+    Point p = Point(offset, offset);
+    rect.setTranslation(p);
+    rect.setScale(1.0f + offset/45, 1);
+    rect.draw();
 
-    offset += 10;
-
-    if(offset > 500) {
+    if (offset == 360) {
         offset = 0;
     }
 
-    Line l2 = Line(p3, p4, color, 1);
-    l2.draw();
-
+    offset++;
 }
 
 void clear() {

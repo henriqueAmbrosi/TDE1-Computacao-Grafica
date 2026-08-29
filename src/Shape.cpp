@@ -60,10 +60,10 @@ void Shape::setRotation(float rotation)
     buildRotateAndScaleMatrix();
 }
 
-void Shape::setScale(float scale[2])
+void Shape::setScale(float x, float y)
 {
-    this->scale[0] = scale[0];
-    this->scale[1] = scale[1];
+    this->scale[0] = x;
+    this->scale[1] = y;
     buildRotateAndScaleMatrix();
 }
 

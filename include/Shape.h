@@ -11,7 +11,7 @@ class Shape
 
         void setTranslation(Point translation);
         void setRotation(float rotation);
-        void setScale(float scale[2]);
+        void setScale(float x, float y);
 
         Point getTranslation();
         float getRotation();

@@ -1,5 +1,6 @@
 #include "Rectangle.h"
 #include <list>
+#include "Line.h"
 
 Rectangle::Rectangle() {
     this->antialias = 0;
@@ -31,11 +32,28 @@ void Rectangle::draw()
     Point p4 = Point(start.getX(), end.getY());
 
     std::list<Point> localPoints = { p1, p2, p3, p4 };
-
-    // 2. Pass local points through Shape's transformation method
-    // (applies scale, rotation, and translation)
     std::list<Point> transformedPoints = transform(localPoints);
+    std::list<Line> localLines = {};
+    std::list<Point>::iterator itlp = transformedPoints.begin();
+    std::list<Point>::iterator itlp2 = transformedPoints.begin();
+    std::list<Line>::iterator itll = localLines.begin();
+    std::advance(itlp2, 1);
 
-    // 3. Render the transformed shape edges onto the screen
-    // Iterate through transformedPoints and draw lines between adjacent points using your pixel/SDL functions.
+    int i = 0;
+    for (i = 0; i < 3; i++) {
+        localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+        std::advance(itlp, 1);
+        std::advance(itlp2, 1);
+        std::advance(itll, 1);
+    }
+
+    itlp2 = transformedPoints.begin();
+    localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+
+    itll = localLines.begin();
+    for (i = 0; i < 3; i++) {
+        (*itll).draw();
+        std::advance(itll, 1);
+    }
+    (*itll).draw();
 }
