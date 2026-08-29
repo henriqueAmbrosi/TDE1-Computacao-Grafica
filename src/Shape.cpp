@@ -7,6 +7,7 @@ Shape::Shape()
     this->scale[0] = 1.0f;
     this->scale[1] = 1.0f;
     this->rotation = 0.0f;
+    this->translation = Point(0, 0); 
     buildRotateAndScaleMatrix();
 }
 
@@ -124,15 +125,17 @@ std::list<Point> Shape::transform(std::list<Point>& points, Point pivot)
     for (Point p : points) {
         Point newP;
 
-        int x, y;
-        x = p.getX() - pivot.getX();
-        y = p.getY() - pivot.getY();
+        int xOrigin = p.getX() - pivot.getX();
+        int yOrigin = p.getY() - pivot.getY();
 
-        int nextX = transformMatrix[0][0] * x + transformMatrix[0][1] * y + transformMatrix[0][2] * 1.0f;
-        int nextY = transformMatrix[1][0] * x + transformMatrix[1][1] * y + transformMatrix[1][2] * 1.0f;
+        float xRotatedAndScaled = rotateAndScaleMatrix[0][0] * xOrigin + rotateAndScaleMatrix[0][1] * yOrigin;
+        float yRotatedAndScaled = rotateAndScaleMatrix[1][0] * xOrigin + rotateAndScaleMatrix[1][1] * yOrigin;
 
-        newP.setX(nextX);
-        newP.setY(nextY);
+        int finalX = static_cast<int>(xRotatedAndScaled) + pivot.getX() + translation.getX();
+        int finalY = static_cast<int>(yRotatedAndScaled) + pivot.getY() + translation.getY();
+
+        newP.setX(finalX);
+        newP.setY(finalY);
 
         transformedPoints.push_back(newP);
     }

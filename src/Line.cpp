@@ -54,6 +54,11 @@ void Line::setPixel(int x, int y, int r, int g, int b) {
 void Line::setPixel(int x, int y, int r, int g, int b, int a) {
     unsigned int * pixels;
     SDL_Surface * window_surface = Context::getInstance()->getWindowSurface();
+
+    if (x < 0 || x >= window_surface->w || y < 0 || y >= window_surface->h) {
+        return;
+    }
+
     pixels = (unsigned int *) window_surface->pixels;
     pixels[x + y * window_surface->w] = SDL_MapRGBA(window_surface->format, r, g, b, a);
 }
