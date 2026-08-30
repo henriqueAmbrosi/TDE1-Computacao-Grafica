@@ -4,6 +4,8 @@
 #include "Rectangle.h"
 #include "Line.h"
 #include "Polygon.h"
+#include "FloodFill.h"
+#include "Drawable.h"
 #include <stdio.h>
 #include <memory>
 
@@ -55,7 +57,7 @@ void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
         case SDLK_DELETE: {
             std::shared_ptr<Shape> selectedShape = Context::getInstance()->getSelectedFigure();
             if (selectedShape) {
-                Context::getInstance()->removeFigure(selectedShape);
+                Context::getInstance()->removeDrawable(selectedShape);
                 Context::getInstance()->setSelectedFigure(nullptr);
                 printf("Selected shape deleted.\n");
             }
@@ -85,6 +87,10 @@ void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
             Context::getInstance()->setSelectedTool(Tool::SELECT);
             printf("Tool switched to: Select\n");
             break;
+        case SDLK_f:
+            Context::getInstance()->setSelectedTool(Tool::PAINT);
+            printf("Tool switched to: Paint (Flood Fill)\n");
+            break;
         default:
             break;
     }
@@ -110,14 +116,14 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
         {
             case Tool::RECTANGLE: {
                 Point end(currentX + 50, currentY + 50);
-                Context::getInstance()->addFigure(
+                Context::getInstance()->addDrawable(
                     std::make_shared<Rectangle>(clickPoint, end, currentColor, 1)
                 );
                 break;
             }
             case Tool::LINE: {
                 Point end(currentX + 50, currentY + 50);
-                Context::getInstance()->addFigure(
+                Context::getInstance()->addDrawable(
                     std::make_shared<Line>(clickPoint, end, currentColor, 1)
                 );
                 break;
@@ -133,14 +139,19 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
             }
             case Tool::SELECT: {
                 bool found = false;
-                for (std::shared_ptr<Shape>& figure : Context::getInstance()->getFigures()) {
-                    if (figure->isInBoundary(clickPoint)) {
-                        Context::getInstance()->setSelectedFigure(figure);
+
+                for (const std::shared_ptr<Drawable>& drawable : Context::getInstance()->getDrawables()) {
+                    // Verifica se Drawable é Shape
+                    std::shared_ptr<Shape> shape = std::dynamic_pointer_cast<Shape>(drawable);
+
+                    if (shape && shape->isInBoundary(clickPoint)) {
+                        Context::getInstance()->setSelectedFigure(shape);
                         printf("Shape selected!\n");
                         found = true;
                         break;
                     }
                 }
+
                 if (!found) {
                     Context::getInstance()->setSelectedFigure(nullptr);
                     printf("Selection cleared.\n");
@@ -148,6 +159,9 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                 break;
             }
             case Tool::PAINT: {
+                auto floodFill = std::make_shared<FloodFill>(clickPoint, currentColor);
+                Context::getInstance()->addDrawable(floodFill);
+                printf("Area filled at (%d, %d)\n", currentX, currentY);
                 break;
             }
         }

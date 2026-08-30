@@ -1,92 +1,77 @@
 #include "Context.h"
 
-Context* Context::_instance = nullptr;
+Context* Context::instance = nullptr;
 
 Context::Context() {
-    this->_window_surface = nullptr;
-    this->_pRenderer = nullptr;
+    this->window_surface = nullptr;
+    this->pRenderer = nullptr;
     this->selectedColor = Color(255, 0, 0);
     this->selectedTool = Tool::RECTANGLE;
     this->selectedFigure = nullptr;
     this->menuVisible = true;
 }
 
-Context::~Context()
-{
+Context::~Context() {
 }
 
-Context* Context::getInstance()
-{
-    if (_instance == nullptr) {
-        _instance = new Context();
+Context* Context::getInstance() {
+    if (instance == nullptr) {
+        instance = new Context();
     }
-    return _instance;
+    return instance;
 }
 
-void Context::setWindowSurface(SDL_Surface* window_surface)
-{
-    _window_surface = window_surface;
+void Context::setWindowSurface(SDL_Surface* window_surface) {
+    this->window_surface = window_surface;
 }
 
-void Context::setRenderer(SDL_Renderer* pRenderer)
-{
-    _pRenderer = pRenderer;
+void Context::setRenderer(SDL_Renderer* pRenderer) {
+    this->pRenderer = pRenderer;
 }
 
-SDL_Surface* Context::getWindowSurface()
-{
-    return _window_surface;
+SDL_Surface* Context::getWindowSurface()  {
+    return this->window_surface;
 }
 
-SDL_Renderer* Context::getRenderer()
-{
-    return _pRenderer;
+SDL_Renderer* Context::getRenderer()  {
+    return this->pRenderer;
 }
 
-Color Context::getSelectedColor()
-{
-    return selectedColor;
+Color Context::getSelectedColor()  {
+    return this->selectedColor;
 }
 
-void Context::setSelectedColor(Color& color)
-{
-    selectedColor = color;
+void Context::setSelectedColor( Color& color) {
+    this->selectedColor = color;
 }
 
-Tool Context::getSelectedTool()
-{
-    return selectedTool;
+Tool Context::getSelectedTool()  {
+    return this->selectedTool;
 }
 
-void Context::setSelectedTool(Tool tool)
-{
-    selectedTool = tool;
+void Context::setSelectedTool(Tool tool) {
+    this->selectedTool = tool;
 }
 
-std::shared_ptr<Shape> Context::getSelectedFigure()
-{
-    return selectedFigure;
+std::shared_ptr<Shape> Context::getSelectedFigure()  {
+    return this->selectedFigure;
 }
 
-void Context::setSelectedFigure(std::shared_ptr<Shape> figure)
-{
-    selectedFigure = figure;
+void Context::setSelectedFigure(std::shared_ptr<Shape> figure) {
+    this->selectedFigure = figure;
 }
 
-std::list<std::shared_ptr<Shape>>& Context::getFigures()
-{
-    return figures;
+std::list<std::shared_ptr<Drawable>>& Context::getDrawables() {
+    return this->drawables;
 }
 
-void Context::addFigure(std::shared_ptr<Shape> figure)
-{
-    figures.push_back(figure);
+void Context::addDrawable(std::shared_ptr<Drawable> drawable) {
+    this->drawables.push_back(drawable);
 }
 
-void Context::removeFigure(std::shared_ptr<Shape> figure)
-{
-    if (figure) {
-        figures.remove(figure);
+void Context::removeDrawable(std::shared_ptr<Drawable> drawable) {
+    if (drawable) {
+        this->drawables.remove(drawable);
     }
 }
 

@@ -2,9 +2,10 @@
 #define SHAPE_H
 #include "Point.h"
 #include "Color.h"
+#include "Drawable.h"
 #include <list>
 
-class Shape
+class Shape: public Drawable
 {
     public:
         Shape();
@@ -20,7 +21,7 @@ class Shape
 
         
         // Abstract interface
-        virtual void draw() = 0;
+        virtual void draw() override = 0;
         virtual void drawBoundary(Color color) = 0;
         virtual bool isInBoundary(Point point) = 0;
 

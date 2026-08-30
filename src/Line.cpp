@@ -143,8 +143,6 @@ bool Line::isInBoundary(Point point) {
 
 Uint32 Line::getPixel(int x, int y) {
     SDL_Surface* window_surface = Context::getInstance()->getWindowSurface();
-    if (!window_surface) return 0;
-
     int bpp = window_surface->format->BytesPerPixel;
     Uint8* p = (Uint8*)window_surface->pixels + y * window_surface->pitch + x * bpp;
 

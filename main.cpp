@@ -9,6 +9,7 @@
 #include "Rectangle.h"
 #include "Circle.h"
 #include "Polygon.h"
+#include "Drawable.h"
 
 SDL_Window* pWindow = nullptr;
 SDL_Surface* window_surface = nullptr;
@@ -17,15 +18,10 @@ ToolMenu toolMenu;
 
 void display()
 {
-    for (std::shared_ptr<Shape>& figure : Context::getInstance()->getFigures()) {
+    for (std::shared_ptr<Drawable>& figure : Context::getInstance()->getDrawables()) {
         figure->draw();
-        figure->drawBoundary(Color(0, 0, 255));
     }
 
-
-    Circle circle = Circle(Point(100, 100), 50, Color(0, 0, 255));
-    circle.draw();
-    circle.drawBoundary(Color(0, 0, 255));
 
     std::shared_ptr<Shape> selectedShape = Context::getInstance()->getSelectedFigure();
     if (selectedShape) {

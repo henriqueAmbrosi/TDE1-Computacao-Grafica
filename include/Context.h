@@ -2,10 +2,12 @@
 #define CONTEXT_H
 
 #include <SDL2/SDL.h>
-#include "Color.h"
-#include "Shape.h"
 #include <list>
 #include <memory>
+
+#include "Color.h"
+#include "Drawable.h"
+#include "Shape.h"
 
 enum class Tool {
     RECTANGLE,
@@ -39,25 +41,25 @@ public:
     std::shared_ptr<Shape> getSelectedFigure();
     void setSelectedFigure(std::shared_ptr<Shape> figure);
 
-    std::list<std::shared_ptr<Shape>>& getFigures();
-    void addFigure(std::shared_ptr<Shape> figure);
-    void removeFigure(std::shared_ptr<Shape> figure);
+    std::list<std::shared_ptr<Drawable>>& getDrawables();
+    void addDrawable(std::shared_ptr<Drawable> drawable);
+    void removeDrawable(std::shared_ptr<Drawable> drawable);
 
     bool isMenuVisible();
-    void setMenuVisible(bool visible);
+    void setMenuVisible(bool menuVisible);
 
 private:
     Context();
     ~Context();
 
-    static Context* _instance;
+    static Context* instance;
 
-    SDL_Surface* _window_surface;
-    SDL_Renderer* _pRenderer;
+    SDL_Surface* window_surface;
+    SDL_Renderer* pRenderer;
     Color selectedColor;
     Tool selectedTool;
     std::shared_ptr<Shape> selectedFigure;
-    std::list<std::shared_ptr<Shape>> figures;
+    std::list<std::shared_ptr<Drawable>> drawables;
     bool menuVisible;
 };
 
