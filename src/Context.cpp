@@ -1,43 +1,91 @@
 #include "Context.h"
 
-Context * Context::_instance = nullptr;
+Context* Context::_instance = nullptr;
 
 Context::Context()
+    : _window_surface(nullptr),
+      _pRenderer(nullptr),
+      selectedColor(255, 0, 0),
+      selectedTool(Tool::RECTANGLE),
+      selectedFigure(nullptr)
 {
-    //ctor
 }
 
 Context::~Context()
 {
-    //dtor
 }
 
-Context * Context::getInstance()
+Context* Context::getInstance()
 {
-    if(_instance == 0) {
+    if (_instance == nullptr) {
         _instance = new Context();
     }
     return _instance;
 }
 
-
-void Context::setWindowSurface(SDL_Surface * window_surface)
+void Context::setWindowSurface(SDL_Surface* window_surface)
 {
     _window_surface = window_surface;
 }
 
-void Context::setRenderer(SDL_Renderer * pRenderer)
+void Context::setRenderer(SDL_Renderer* pRenderer)
 {
     _pRenderer = pRenderer;
 }
 
-SDL_Surface * Context::getWindowSurface()
+SDL_Surface* Context::getWindowSurface() const
 {
     return _window_surface;
 }
 
-SDL_Renderer* Context::getRenderer()
+SDL_Renderer* Context::getRenderer() const
 {
     return _pRenderer;
 }
 
+Color Context::getSelectedColor() const
+{
+    return selectedColor;
+}
+
+void Context::setSelectedColor(const Color& color)
+{
+    selectedColor = color;
+}
+
+Tool Context::getSelectedTool() const
+{
+    return selectedTool;
+}
+
+void Context::setSelectedTool(Tool tool)
+{
+    selectedTool = tool;
+}
+
+std::shared_ptr<Shape> Context::getSelectedFigure() const
+{
+    return selectedFigure;
+}
+
+void Context::setSelectedFigure(std::shared_ptr<Shape> figure)
+{
+    selectedFigure = figure;
+}
+
+std::list<std::shared_ptr<Shape>>& Context::getFigures()
+{
+    return figures;
+}
+
+void Context::addFigure(std::shared_ptr<Shape> figure)
+{
+    figures.push_back(figure);
+}
+
+void Context::removeFigure(std::shared_ptr<Shape> figure)
+{
+    if (figure) {
+        figures.remove(figure);
+    }
+}
