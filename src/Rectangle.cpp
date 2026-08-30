@@ -93,56 +93,27 @@ void Rectangle::drawWithPivot(Point pivot)
     (*itll).draw();
 }
 
-std::list<Point> Rectangle::getBoundaryPointsList(Point start, Point end) {
-    std::list<Point> localPoints = { start, Point(end.getX(), start.getY()), end, Point(start.getX(), end.getY()) };
-    std::list<Point> transformedPoints = transform(localPoints, this->start);
-    return transformedPoints;
-}
-
-void Rectangle::addMouseClickAnchors(Point start, Point end, Color color) {
-    std::list<Rectangle> rects = {};
-    std::list<Rectangle>::iterator rI = rects.begin();
-
-    std::list<Point> transformedPoints = getBoundaryPointsList(start, end);
-    std::list<Point>::iterator ittp = transformedPoints.begin();
-
-    int i = 0, size = transformedPoints.size();
-    for (i = 0; i < size; i++) {
-        Point anchorStart = *ittp, anchorEnd = *ittp;
-        anchorEnd.setX(anchorEnd.getX() + 5);
-        anchorEnd.setY(anchorEnd.getY() + 5);
-        anchorStart.setX(anchorStart.getX() - 5);
-        anchorStart.setY(anchorStart.getY() - 5);
-        rI = rects.insert(rI, Rectangle(anchorStart, anchorEnd, color));
-        (*rI).draw();
-        // Todo | add flood fill
-        std::advance(ittp, 1);
-        std::advance(rI, 1);
-    }
-}
-
-void Rectangle::drawBoundary(Color color)
-{
+Point Rectangle::inflate(Point p) {
     Point center(
         (start.getX() + end.getX()) / 2,
         (start.getY() + end.getY()) / 2
     );
+    const float padding = 1.1f;
+    return Point(
+        center.getX() + (int)((p.getX() - center.getX()) * padding),
+        center.getY() + (int)((p.getY() - center.getY()) * padding)
+    );
+}
 
-    float padding = 1.1f;
-    auto inflate = [&](Point p) {
-        return Point(
-            center.getX() + (int)((p.getX() - center.getX()) * padding),
-            center.getY() + (int)((p.getY() - center.getY()) * padding)
-        );
-    };
-
+void Rectangle::drawBoundary(Color color)
+{
     Rectangle rect = Rectangle(inflate(start), inflate(end), color);
     rect.setRotation(this->getRotation());
     rect.setTranslation(this->getTranslation());
     rect.setScale(this->getScale()[0], this->getScale()[1]);
     rect.drawWithPivot(start);
 
-    addMouseClickAnchors(start, end, color);
+    addMouseClickAnchors(start, end, start, color);
 }
 
 bool Rectangle::isInBoundary(Point point)

@@ -12,6 +12,9 @@ class Polygon : public Shape
         Polygon(std::list<Point> points, Color color);
         virtual ~Polygon();
         void draw() override;
+        void drawWithPivot(Point pivot);
+        bool isInBoundary(Point point);
+        void drawBoundary(Color color);
 
     protected:
         std::list<Point> points;

@@ -25,8 +25,7 @@ class Rectangle : public Shape
         Color color;
         int antialias = 0;
         Uint32 getPixel(int x, int y);
-        std::list<Point> getBoundaryPointsList(Point start, Point end);
-        void addMouseClickAnchors(Point start, Point end, Color color);
+        Point inflate(Point p);
 };
 
 #endif // RECTANGLE_H

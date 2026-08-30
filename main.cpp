@@ -5,6 +5,9 @@
 #include "Context.h"
 #include "Events.h"
 #include "ToolMenu.h"
+#include "Color.h"
+#include "Rectangle.h"
+#include "Polygon.h"
 
 SDL_Window* pWindow = nullptr;
 SDL_Surface* window_surface = nullptr;
@@ -15,6 +18,7 @@ void display()
 {
     for (std::shared_ptr<Shape>& figure : Context::getInstance()->getFigures()) {
         figure->draw();
+        figure->drawBoundary(Color(0, 0, 255));
     }
 
     std::shared_ptr<Shape> selectedShape = Context::getInstance()->getSelectedFigure();

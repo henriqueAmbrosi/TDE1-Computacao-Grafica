@@ -29,6 +29,8 @@ class Shape
     protected:
         std::list<Point> transform(std::list<Point>& points);
         std::list<Point> transform(std::list<Point>& points, Point pivot);
+        std::list<Point> getBoundaryPointsList(Point start, Point end, Point pivot);
+        void addMouseClickAnchors(Point start, Point end, Point pivot, Color color);
 
     private:
         float scale[2] = { 1.0f, 1.0f };
