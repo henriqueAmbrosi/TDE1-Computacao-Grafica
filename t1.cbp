@@ -38,7 +38,6 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="SDL2.dll" />
-		<Unit filename="bin/Debug/t1" />
 		<Unit filename="include/BezierCurve.h" />
 		<Unit filename="include/Circle.h" />
 		<Unit filename="include/Color.h" />
@@ -50,15 +49,6 @@
 		<Unit filename="include/Rectangle.h" />
 		<Unit filename="include/Shape.h" />
 		<Unit filename="main.cpp" />
-		<Unit filename="obj/Debug/main.o" />
-		<Unit filename="obj/Debug/src/BezierCurve.o" />
-		<Unit filename="obj/Debug/src/Circle.o" />
-		<Unit filename="obj/Debug/src/Color.o" />
-		<Unit filename="obj/Debug/src/Context.o" />
-		<Unit filename="obj/Debug/src/Line.o" />
-		<Unit filename="obj/Debug/src/Point.o" />
-		<Unit filename="obj/Debug/src/Polygon.o" />
-		<Unit filename="obj/Debug/src/Rectangle.o" />
 		<Unit filename="src/BezierCurve.cpp" />
 		<Unit filename="src/Circle.cpp" />
 		<Unit filename="src/Color.cpp" />

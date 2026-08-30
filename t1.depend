@@ -490,3 +490,76 @@
 
 1787923725 /home/hma/Documentos/t1/include/Polygon.h
 
+1787964457 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/main.cpp
+	<SDL2/SDL.h>
+	<stdio.h>
+	<unistd.h>
+	<Context.h>
+	<Color.h>
+	<Point.h>
+	<Line.h>
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Context.h
+	<SDL2/SDL.h>
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Color.h
+	<SDL2/SDL.h>
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Point.h
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Line.h
+	<Point.h>
+	<Color.h>
+	<SDL2/SDL.h>
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/BezierCurve.cpp
+	"BezierCurve.h"
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/BezierCurve.h
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Circle.cpp
+	"Circle.h"
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Circle.h
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Color.cpp
+	"Color.h"
+	"Context.h"
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Context.cpp
+	"Context.h"
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Line.cpp
+	"Line.h"
+	"Context.h"
+	<math.h>
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Point.cpp
+	"Point.h"
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Polygon.cpp
+	"Polygon.h"
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Polygon.h
+
+1787963719 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Rectangle.cpp
+	"Rectangle.h"
+	<list>
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Rectangle.h
+	<Point.h>
+	<Color.h>
+	<Shape.h>
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/Shape.h
+	<Point.h>
+	<list>
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/FloodFill.cpp
+	"FloodFill.h"
+
+1787963416 /home/henrique/faculdade/TDE1-Computacao-Grafica/include/FloodFill.h
+
+1787963416 source:/home/henrique/faculdade/TDE1-Computacao-Grafica/src/Shape.cpp
+	"Shape.h"
+
