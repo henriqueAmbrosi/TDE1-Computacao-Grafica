@@ -14,8 +14,6 @@
 SDL_Window* pWindow = nullptr;
 SDL_Surface* window_surface = nullptr;
 
-ToolMenu toolMenu;
-
 void display()
 {
     for (std::shared_ptr<Drawable>& figure : Context::getInstance()->getDrawables()) {
@@ -28,7 +26,7 @@ void display()
         selectedShape->drawBoundary(Color(0, 0, 255));
     }
 
-    toolMenu.draw();
+    Context::getInstance()->getToolMenu().draw();
 }
 
 void clear() 

@@ -1,17 +1,17 @@
-#ifndef FLOODFILL_H
-#define FLOODFILL_H
+#ifndef PAINT_H
+#define PAINT_H
 
 #include <SDL2/SDL.h>
 #include "Color.h"
 #include "Point.h"
 #include "Drawable.h"
 
-class FloodFill : public Drawable
+class Paint : public Drawable
 {
 public:
-    FloodFill();
-    FloodFill(Point p, Color c);
-    virtual ~FloodFill();
+    Paint();
+    Paint(Point p, Color c);
+    virtual ~Paint();
 
     void draw() override;
     void fill(int x, int y, Color fillColor);
@@ -27,4 +27,4 @@ private:
     Point fillPoint;
 };
 
-#endif // FLOODFILL_H
+#endif // PAINT_H

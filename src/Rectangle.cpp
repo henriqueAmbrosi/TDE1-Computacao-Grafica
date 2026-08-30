@@ -105,6 +105,10 @@ Point Rectangle::inflate(Point p) {
     );
 }
 
+Color Rectangle::getColor(){
+    return this->color;
+}
+
 void Rectangle::drawBoundary(Color color)
 {
     Rectangle rect = Rectangle(inflate(start), inflate(end), color);

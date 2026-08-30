@@ -8,6 +8,7 @@
 #include "Color.h"
 #include "Drawable.h"
 #include "Shape.h"
+#include "ToolMenu.h"
 
 enum class Tool {
     RECTANGLE,
@@ -38,6 +39,8 @@ public:
     Tool getSelectedTool();
     void setSelectedTool(Tool tool);
 
+    ToolMenu getToolMenu();
+
     std::shared_ptr<Shape> getSelectedFigure();
     void setSelectedFigure(std::shared_ptr<Shape> figure);
 
@@ -58,6 +61,7 @@ private:
     SDL_Renderer* pRenderer;
     Color selectedColor;
     Tool selectedTool;
+    ToolMenu toolMenu;
     std::shared_ptr<Shape> selectedFigure;
     std::list<std::shared_ptr<Drawable>> drawables;
     bool menuVisible;

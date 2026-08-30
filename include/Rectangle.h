@@ -14,6 +14,7 @@ class Rectangle : public Shape
         void drawBoundary(Color color) override;
         bool isInBoundary(Point point) override;
         void drawWithPivot(Point pivot);
+        Color getColor();
         virtual ~Rectangle();
 
 

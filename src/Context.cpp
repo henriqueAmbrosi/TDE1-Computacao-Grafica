@@ -37,6 +37,10 @@ SDL_Renderer* Context::getRenderer()  {
     return this->pRenderer;
 }
 
+ToolMenu Context::getToolMenu()  {
+    return this->toolMenu;
+}
+
 Color Context::getSelectedColor()  {
     return this->selectedColor;
 }

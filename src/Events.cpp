@@ -5,8 +5,9 @@
 #include "Line.h"
 #include "Polygon.h"
 #include "Circle.h"
-#include "FloodFill.h"
+#include "Paint.h"
 #include "Drawable.h"
+#include "ToolMenu.h"
 #include <stdio.h>
 #include <memory>
 
@@ -157,7 +158,13 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
     Tool activeTool = Context::getInstance()->getSelectedTool();
     Color currentColor = Context::getInstance()->getSelectedColor();
     Point clickPoint(mouseEvent.x, mouseEvent.y);
+    ToolMenu toolMenu = Context::getInstance()->getToolMenu();
 
+    if(toolMenu.isInBoundary(clickPoint)){
+        toolMenu.onClick(clickPoint);
+        return;
+    }
+    
     // Clique com o Botão Direito finaliza o Polígono
     if (mouseEvent.button == SDL_BUTTON_RIGHT) {
         if (activeTool == Tool::POLYGON && !tempPolygonPoints.empty()) {
@@ -227,7 +234,7 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                 break;
             }
             case Tool::PAINT: {
-                auto floodFill = std::make_shared<FloodFill>(clickPoint, currentColor);
+                auto floodFill = std::make_shared<Paint>(clickPoint, currentColor);
                 Context::getInstance()->addDrawable(floodFill);
                 printf("Area filled at (%d, %d)\n", clickPoint.getX(), clickPoint.getY());
                 break;

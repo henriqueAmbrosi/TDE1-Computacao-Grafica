@@ -1,20 +1,20 @@
-#include "FloodFill.h"
+#include "Paint.h"
 #include "Context.h"
 #include <stack>
 
-FloodFill::FloodFill() {
+Paint::Paint() {
 }
 
-FloodFill::FloodFill(Point p, Color c) {
+Paint::Paint(Point p, Color c) {
     this->fillColor = c;
     this->fillPoint = p;
 }
 
 
-FloodFill::~FloodFill() {
+Paint::~Paint() {
 }
 
-Uint32 FloodFill::getPixel(int x, int y) {
+Uint32 Paint::getPixel(int x, int y) {
     SDL_Surface* window_surface = Context::getInstance()->getWindowSurface();
     if (!window_surface) return 0;
 
@@ -42,7 +42,7 @@ Uint32 FloodFill::getPixel(int x, int y) {
     }
 }
 
-void FloodFill::setPixel(int x, int y, Uint32 pixelColor) {
+void Paint::setPixel(int x, int y, Uint32 pixelColor) {
     SDL_Surface* window_surface = Context::getInstance()->getWindowSurface();
     if (!window_surface) return;
 
@@ -54,11 +54,11 @@ void FloodFill::setPixel(int x, int y, Uint32 pixelColor) {
     pixels[x + y * window_surface->w] = pixelColor;
 }
 
-void FloodFill::setPixel(int x, int y, Color color) {
+void Paint::setPixel(int x, int y, Color color) {
     this->setPixel(x, y, color.getR(), color.getG(), color.getB(), 255);
 }
 
-void FloodFill::setPixel(int x, int y, int r, int g, int b, int a) {
+void Paint::setPixel(int x, int y, int r, int g, int b, int a) {
     SDL_Surface* window_surface = Context::getInstance()->getWindowSurface();
     if (!window_surface) return;
 
@@ -70,15 +70,15 @@ void FloodFill::setPixel(int x, int y, int r, int g, int b, int a) {
     pixels[x + y * window_surface->w] = SDL_MapRGBA(window_surface->format, r, g, b, a);
 }
 
-void FloodFill::fill(Point point, Color fillColor) {
+void Paint::fill(Point point, Color fillColor) {
     this->fill(point.getX(), point.getY(), fillColor);
 }
 
-void FloodFill::draw(){
+void Paint::draw(){
     fill(this->fillPoint, this->fillColor);
 }
 
-void FloodFill::fill(int startX, int startY, Color fillColor) {
+void Paint::fill(int startX, int startY, Color fillColor) {
     this->fillColor = fillColor;
     this->fillPoint = Point(startX, startY);
     
