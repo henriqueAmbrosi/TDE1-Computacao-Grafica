@@ -74,6 +74,54 @@ void Paint::fill(Point point, Color fillColor) {
     this->fill(point.getX(), point.getY(), fillColor);
 }
 
+void Paint::forceFill(Point point, Color fillColor, Color limitColor){
+    int startX = point.getX();
+    int startY = point.getY();
+    this->fillColor = fillColor;
+    this->fillPoint = Point(startX, startY);
+    
+    SDL_Surface* surface = Context::getInstance()->getWindowSurface();
+    if (!surface) return;
+
+    int width = surface->w;
+    int height = surface->h;
+
+    if (startX < 0 || startX >= width || startY < 0 || startY >= height) {
+        return;
+    }
+
+    Uint32 fillPixel = SDL_MapRGB(surface->format, fillColor.getR(), fillColor.getG(), fillColor.getB());
+    Uint32 stopColor = limitColor.getColor();
+
+    if (fillPixel != stopColor) {
+        return;
+    }
+
+    std::stack<Point> st;
+    st.push(Point(startX, startY));
+
+    while (!st.empty()) {
+        Point p = st.top();
+        st.pop();
+
+        int x = p.getX();
+        int y = p.getY();
+
+        if (x < 0 || x >= width || y < 0 || y >= height) {
+            continue;
+        }
+
+        if (this->getPixel(x, y) != stopColor) {
+            this->setPixel(x, y, fillPixel);
+
+            st.push(Point(x + 1, y));
+            st.push(Point(x - 1, y));
+            st.push(Point(x, y + 1));
+            st.push(Point(x, y - 1));
+        }
+    }
+}
+
 void Paint::draw(){
     fill(this->fillPoint, this->fillColor);
 }

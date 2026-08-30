@@ -31,5 +31,5 @@ void ToolMenu::draw()
 {   
     this->container.draw();
     Paint paint;
-    paint.fill(Point(1, 20), this->container.getColor());
+    paint.forceFill(Point(1, 20), this->container.getColor(),this->container.getColor());
 }
