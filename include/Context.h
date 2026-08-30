@@ -43,6 +43,9 @@ public:
     void addFigure(std::shared_ptr<Shape> figure);
     void removeFigure(std::shared_ptr<Shape> figure);
 
+    bool isMenuVisible() const;
+    void setMenuVisible(bool visible);
+
 private:
     Context();
     ~Context();
@@ -55,6 +58,7 @@ private:
     Tool selectedTool;
     std::shared_ptr<Shape> selectedFigure;
     std::list<std::shared_ptr<Shape>> figures;
+    bool menuVisible;
 };
 
 #endif // CONTEXT_H
