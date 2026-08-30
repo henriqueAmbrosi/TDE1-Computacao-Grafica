@@ -111,5 +111,28 @@ void Polygon::drawBoundary(Color color) {
 }
 
 bool Polygon::isInBoundary(Point point) {
+    std::list<Point> transformedPoints = transform(this->points, this->points.front());
+    std::list<Point>::iterator itlp = transformedPoints.begin();
 
+    int maxX, maxY, minX, minY, size, i = 0;
+    maxX = minX = transformedPoints.front().getX();
+    maxY = minY = transformedPoints.front().getY();
+    size = transformedPoints.size();
+    for (i = 0; i < size; i++) {
+        if (itlp->getX() > maxX) {
+            maxX = itlp->getX();
+        }
+        if (itlp->getX() < minX) {
+            minX = itlp->getX();
+        }
+        if (itlp->getY() > maxY) {
+            maxY = itlp->getY();
+        }
+        if (itlp->getY() < minY) {
+            minY = itlp->getY();
+        }
+        std::advance(itlp, 1);
+    }
+
+    return point.getX() >= minX && point.getX() <= maxX && point.getY() >= minY && point.getY() <= maxY;
 }
