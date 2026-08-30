@@ -13,9 +13,9 @@ public:
     bool pollEvents();
 
 private:
-    void handleKeyDown(const SDL_KeyboardEvent& keyEvent);
-    void handleMouseButtonUp(const SDL_MouseButtonEvent& mouseEvent);
-    void handleMouseMotion(const SDL_MouseMotionEvent& motionEvent);
+    void handleKeyDown(SDL_KeyboardEvent& keyEvent);
+    void handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent);
+    void handleMouseMotion(SDL_MouseMotionEvent& motionEvent);
 };
 
 #endif // EVENTS_H

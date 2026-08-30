@@ -13,11 +13,11 @@ ToolMenu toolMenu;
 
 void display()
 {
-    for (const auto& figure : Context::getInstance()->getFigures()) {
+    for (std::shared_ptr<Shape>& figure : Context::getInstance()->getFigures()) {
         figure->draw();
     }
 
-    auto selectedShape = Context::getInstance()->getSelectedFigure();
+    std::shared_ptr<Shape> selectedShape = Context::getInstance()->getSelectedFigure();
     if (selectedShape) {
         selectedShape->drawBoundary(Color(0, 0, 255));
     }

@@ -128,7 +128,7 @@ void Rectangle::drawBoundary(Color color)
         (start.getY() + end.getY()) / 2
     );
 
-    const float padding = 1.1f;
+    float padding = 1.1f;
     auto inflate = [&](Point p) {
         return Point(
             center.getX() + (int)((p.getX() - center.getX()) * padding),

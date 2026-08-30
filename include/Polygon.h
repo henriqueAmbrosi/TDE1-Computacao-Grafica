@@ -1,8 +1,8 @@
 #ifndef POLYGON_H
 #define POLYGON_H
-#include <Point.h>
-#include <Color.h>
-#include <Shape.h>
+#include "Point.h"
+#include "Color.h"
+#include "Shape.h"
 #include <list>
 
 

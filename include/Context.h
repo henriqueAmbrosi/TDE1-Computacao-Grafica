@@ -2,8 +2,8 @@
 #define CONTEXT_H
 
 #include <SDL2/SDL.h>
-#include <Color.h>
-#include <Shape.h>
+#include "Color.h"
+#include "Shape.h"
 #include <list>
 #include <memory>
 
@@ -22,28 +22,28 @@ class Context
 public:
     static Context* getInstance();
 
-    Context(const Context&) = delete;
-    Context& operator=(const Context&) = delete;
+    Context(Context&) = delete;
+    Context& operator=(Context&) = delete;
 
     void setWindowSurface(SDL_Surface* window_surface);
     void setRenderer(SDL_Renderer* pRenderer);
-    SDL_Surface* getWindowSurface() const;
-    SDL_Renderer* getRenderer() const;
+    SDL_Surface* getWindowSurface();
+    SDL_Renderer* getRenderer();
 
-    Color getSelectedColor() const;
-    void setSelectedColor(const Color& color);
+    Color getSelectedColor();
+    void setSelectedColor(Color& color);
 
-    Tool getSelectedTool() const;
+    Tool getSelectedTool();
     void setSelectedTool(Tool tool);
 
-    std::shared_ptr<Shape> getSelectedFigure() const;
+    std::shared_ptr<Shape> getSelectedFigure();
     void setSelectedFigure(std::shared_ptr<Shape> figure);
 
     std::list<std::shared_ptr<Shape>>& getFigures();
     void addFigure(std::shared_ptr<Shape> figure);
     void removeFigure(std::shared_ptr<Shape> figure);
 
-    bool isMenuVisible() const;
+    bool isMenuVisible();
     void setMenuVisible(bool visible);
 
 private:

@@ -1,8 +1,8 @@
 #ifndef RECTANGLE_H
 #define RECTANGLE_H
-#include <Point.h>
-#include <Color.h>
-#include <Shape.h>
+#include "Point.h"
+#include "Color.h"
+#include "Shape.h"
 
 class Rectangle : public Shape
 {

@@ -33,27 +33,27 @@ void Context::setRenderer(SDL_Renderer* pRenderer)
     _pRenderer = pRenderer;
 }
 
-SDL_Surface* Context::getWindowSurface() const
+SDL_Surface* Context::getWindowSurface()
 {
     return _window_surface;
 }
 
-SDL_Renderer* Context::getRenderer() const
+SDL_Renderer* Context::getRenderer()
 {
     return _pRenderer;
 }
 
-Color Context::getSelectedColor() const
+Color Context::getSelectedColor()
 {
     return selectedColor;
 }
 
-void Context::setSelectedColor(const Color& color)
+void Context::setSelectedColor(Color& color)
 {
     selectedColor = color;
 }
 
-Tool Context::getSelectedTool() const
+Tool Context::getSelectedTool()
 {
     return selectedTool;
 }
@@ -63,7 +63,7 @@ void Context::setSelectedTool(Tool tool)
     selectedTool = tool;
 }
 
-std::shared_ptr<Shape> Context::getSelectedFigure() const
+std::shared_ptr<Shape> Context::getSelectedFigure()
 {
     return selectedFigure;
 }
@@ -90,7 +90,7 @@ void Context::removeFigure(std::shared_ptr<Shape> figure)
     }
 }
 
-bool Context::isMenuVisible() const {
+bool Context::isMenuVisible() {
     return this->menuVisible;
 }
 

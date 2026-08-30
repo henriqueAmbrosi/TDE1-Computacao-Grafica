@@ -1,9 +1,9 @@
 #ifndef LINE_H
 #define LINE_H
 
-#include <Shape.h>
-#include <Point.h>
-#include <Color.h>
+#include "Shape.h"
+#include "Point.h"
+#include "Color.h"
 #include <SDL2/SDL.h>
 
 class Line : public Shape
@@ -27,8 +27,8 @@ public:
     void drawBoundary(Color color) override;
     bool isInBoundary(Point point) override;
 
-    Point getStart() const { return start; }
-    Point getEnd() const { return end; }
+    Point getStart() { return start; }
+    Point getEnd() { return end; }
 
 private:
     Point start;

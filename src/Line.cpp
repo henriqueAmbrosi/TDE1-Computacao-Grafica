@@ -103,6 +103,7 @@ void Line::drawBoundary(Color color) {
 bool Line::isInBoundary(Point point) {
     std::list<Point> localPoints = { this->start, this->end };
     std::list<Point> transformedPoints = transform(localPoints, this->start);
+    float toleranceInPx = 5.0f
 
     auto it = transformedPoints.begin();
     Point p1 = *it;
@@ -125,18 +126,19 @@ bool Line::isInBoundary(Point point) {
         return false;
     }
 
-    double l2 = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
-    if (l2 == 0.0) {
+    double squaredLength = (x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1);
+    if (squaredLength == 0.0) {
         double dist = std::sqrt((px - x1) * (px - x1) + (py - y1) * (py - y1));
-        return dist <= 5.0;
+        return dist <= toleranceInPx;
     }
 
-    double t = std::max(0.0, std::min(1.0, ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / l2));
+    // Determina o ponto mais próximo contido na reta do ponto dado
+    double t = std::max(0.0, std::min(1.0, ((px - x1) * (x2 - x1) + (py - y1) * (y2 - y1)) / squaredLength));
     double projX = x1 + t * (x2 - x1);
     double projY = y1 + t * (y2 - y1);
 
     double distance = std::sqrt((px - projX) * (px - projX) + (py - projY) * (py - projY));
-    return distance <= 5.0; // Click tolerance threshold in pixels
+    return distance <= toleranceInPx;
 }
 
 Uint32 Line::getPixel(int x, int y) {

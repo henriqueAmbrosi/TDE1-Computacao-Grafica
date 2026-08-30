@@ -48,7 +48,7 @@ bool Events::pollEvents()
     return true;
 }
 
-void Events::handleKeyDown(const SDL_KeyboardEvent& keyEvent)
+void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
 {
     switch (keyEvent.keysym.sym)
     {
@@ -90,12 +90,12 @@ void Events::handleKeyDown(const SDL_KeyboardEvent& keyEvent)
     }
 }
 
-void Events::handleMouseMotion(const SDL_MouseMotionEvent& motionEvent)
+void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
 {
 
 }
 
-void Events::handleMouseButtonUp(const SDL_MouseButtonEvent& mouseEvent)
+void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
 {
     if (mouseEvent.button == SDL_BUTTON_LEFT)
     {
@@ -133,7 +133,7 @@ void Events::handleMouseButtonUp(const SDL_MouseButtonEvent& mouseEvent)
             }
             case Tool::SELECT: {
                 bool found = false;
-                for (const auto& figure : Context::getInstance()->getFigures()) {
+                for (std::shared_ptr<Shape>& figure : Context::getInstance()->getFigures()) {
                     if (figure->isInBoundary(clickPoint)) {
                         Context::getInstance()->setSelectedFigure(figure);
                         printf("Shape selected!\n");

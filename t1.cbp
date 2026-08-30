@@ -38,27 +38,34 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="SDL2.dll" />
+		<Unit filename="compile_commands.json" />
 		<Unit filename="include/BezierCurve.h" />
 		<Unit filename="include/Circle.h" />
 		<Unit filename="include/Color.h" />
 		<Unit filename="include/Context.h" />
+		<Unit filename="include/Events.h" />
 		<Unit filename="include/FloodFill.h" />
 		<Unit filename="include/Line.h" />
 		<Unit filename="include/Point.h" />
 		<Unit filename="include/Polygon.h" />
 		<Unit filename="include/Rectangle.h" />
 		<Unit filename="include/Shape.h" />
+		<Unit filename="include/ToolMenu.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="makefile" />
+		<Unit filename="out" />
 		<Unit filename="src/BezierCurve.cpp" />
 		<Unit filename="src/Circle.cpp" />
 		<Unit filename="src/Color.cpp" />
 		<Unit filename="src/Context.cpp" />
+		<Unit filename="src/Events.cpp" />
 		<Unit filename="src/FloodFill.cpp" />
 		<Unit filename="src/Line.cpp" />
 		<Unit filename="src/Point.cpp" />
 		<Unit filename="src/Polygon.cpp" />
 		<Unit filename="src/Rectangle.cpp" />
 		<Unit filename="src/Shape.cpp" />
+		<Unit filename="src/ToolMenu.cpp" />
 		<Unit filename="t1.depend" />
 		<Unit filename="t1.layout" />
 		<Extensions>

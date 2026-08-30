@@ -1,8 +1,8 @@
-#include <ToolMenu.h>
-#include <Context.h>
-#include <Color.h>
-#include <Rectangle.h>
-#include <Point.h>
+#include "ToolMenu.h"
+#include "Context.h"
+#include "Color.h"
+#include "Rectangle.h"
+#include "Point.h"
 
 ToolMenu::ToolMenu()
 {
