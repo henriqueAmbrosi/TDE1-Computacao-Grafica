@@ -51,8 +51,53 @@ bool Events::pollEvents()
     return true;
 }
 
+void Events::resetPolygonCreation()
+{
+    // Remove do Context todas as linhas provisórias desenhadas
+    for (const auto& line : tempPolygonLines) {
+        Context::getInstance()->removeDrawable(line);
+    }
+    tempPolygonLines.clear();
+    tempPolygonPoints.clear();
+}
+
+void Events::finishPolygon()
+{
+    if (tempPolygonPoints.size() >= 3) {
+        Color currentColor = Context::getInstance()->getSelectedColor();
+
+        auto polygon = std::make_shared<Polygon>(tempPolygonPoints, currentColor);
+
+        resetPolygonCreation();
+
+        Context::getInstance()->addDrawable(polygon);
+        printf("Polygon completed with success!\n");
+    } else {
+        printf("Polygon requires at least 3 points. Operation canceled.\n");
+        resetPolygonCreation();
+    }
+}
+
 void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
 {
+    if (keyEvent.keysym.sym == SDLK_ESCAPE) {
+        if (!tempPolygonPoints.empty()) {
+            resetPolygonCreation();
+            printf("Polygon creation canceled.\n");
+        }
+        return;
+    }
+
+    if (keyEvent.keysym.sym == SDLK_RETURN || keyEvent.keysym.sym == SDLK_KP_ENTER) {
+        if (Context::getInstance()->getSelectedTool() == Tool::POLYGON) {
+            finishPolygon();
+        }
+        return;
+    }
+
+    // Troca de ferramenta (reseta construção pendente)
+    Tool previousTool = Context::getInstance()->getSelectedTool();
+
     switch (keyEvent.keysym.sym)
     {
         case SDLK_DELETE: {
@@ -95,6 +140,11 @@ void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
         default:
             break;
     }
+
+    // Se mudou de ferramenta enquanto desenhava um polígono, limpa o rascunho
+    if (previousTool != Context::getInstance()->getSelectedTool() && !tempPolygonPoints.empty()) {
+        resetPolygonCreation();
+    }
 }
 
 void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
@@ -104,26 +154,30 @@ void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
 
 void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
 {
-    if (mouseEvent.button == SDL_BUTTON_LEFT)
-    {
-        int currentX = mouseEvent.x;
-        int currentY = mouseEvent.y;
-        Point clickPoint(currentX, currentY);
+    Tool activeTool = Context::getInstance()->getSelectedTool();
+    Color currentColor = Context::getInstance()->getSelectedColor();
+    Point clickPoint(mouseEvent.x, mouseEvent.y);
 
-        Color currentColor = Context::getInstance()->getSelectedColor();
-        Tool activeTool = Context::getInstance()->getSelectedTool();
+    // Clique com o Botão Direito finaliza o Polígono
+    if (mouseEvent.button == SDL_BUTTON_RIGHT) {
+        if (activeTool == Tool::POLYGON && !tempPolygonPoints.empty()) {
+            finishPolygon();
+        }
+        return;
+    }
 
+    if (mouseEvent.button == SDL_BUTTON_LEFT) {
         switch (activeTool)
         {
             case Tool::RECTANGLE: {
-                Point end(currentX + 50, currentY + 50);
+                Point end(clickPoint.getX() + 50, clickPoint.getY() + 50);
                 Context::getInstance()->addDrawable(
                     std::make_shared<Rectangle>(clickPoint, end, currentColor, 1)
                 );
                 break;
             }
             case Tool::LINE: {
-                Point end(currentX + 50, currentY + 50);
+                Point end(clickPoint.getX() + 50, clickPoint.getY() + 50);
                 Context::getInstance()->addDrawable(
                     std::make_shared<Line>(clickPoint, end, currentColor, 1)
                 );
@@ -139,13 +193,23 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                 break;
             }
             case Tool::POLYGON: {
+                if (!tempPolygonPoints.empty()) {
+                    // Desenha uma linha provisória ligando o último ponto ao novo clique
+                    Point lastPoint = tempPolygonPoints.back();
+                    auto linePreview = std::make_shared<Line>(lastPoint, clickPoint, currentColor, 1);
+                    
+                    Context::getInstance()->addDrawable(linePreview);
+                    tempPolygonLines.push_back(linePreview);
+                }
+
+                tempPolygonPoints.push_back(clickPoint);
+                printf("Polygon point added: (%d, %d)\n", clickPoint.getX(), clickPoint.getY());
                 break;
             }
             case Tool::SELECT: {
                 bool found = false;
 
                 for (const std::shared_ptr<Drawable>& drawable : Context::getInstance()->getDrawables()) {
-                    // Verifica se Drawable é Shape
                     std::shared_ptr<Shape> shape = std::dynamic_pointer_cast<Shape>(drawable);
 
                     if (shape && shape->isInBoundary(clickPoint)) {
@@ -165,7 +229,7 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
             case Tool::PAINT: {
                 auto floodFill = std::make_shared<FloodFill>(clickPoint, currentColor);
                 Context::getInstance()->addDrawable(floodFill);
-                printf("Area filled at (%d, %d)\n", currentX, currentY);
+                printf("Area filled at (%d, %d)\n", clickPoint.getX(), clickPoint.getY());
                 break;
             }
         }
