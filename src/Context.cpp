@@ -2,13 +2,13 @@
 
 Context* Context::_instance = nullptr;
 
-Context::Context()
-    : _window_surface(nullptr),
-      _pRenderer(nullptr),
-      selectedColor(255, 0, 0),
-      selectedTool(Tool::RECTANGLE),
-      selectedFigure(nullptr)
-{
+Context::Context() {
+    this->_window_surface = nullptr;
+    this->_pRenderer = nullptr;
+    this->selectedColor = Color(255, 0, 0);
+    this->selectedTool = Tool::RECTANGLE;
+    this->selectedFigure = nullptr;
+    this->menuVisible = true;
 }
 
 Context::~Context()
@@ -88,4 +88,12 @@ void Context::removeFigure(std::shared_ptr<Shape> figure)
     if (figure) {
         figures.remove(figure);
     }
+}
+
+bool Context::isMenuVisible() const {
+    return this->menuVisible;
+}
+
+void Context::setMenuVisible(bool menuVisible) {
+    this->menuVisible = menuVisible;
 }

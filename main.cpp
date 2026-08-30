@@ -4,9 +4,12 @@
 
 #include "Context.h"
 #include "Events.h"
+#include "ToolMenu.h"
 
 SDL_Window* pWindow = nullptr;
 SDL_Surface* window_surface = nullptr;
+
+ToolMenu toolMenu;
 
 void display()
 {
@@ -18,6 +21,8 @@ void display()
     if (selectedShape) {
         selectedShape->drawBoundary(Color(0, 0, 255));
     }
+
+    toolMenu.draw();
 }
 
 void clear() 
