@@ -4,6 +4,7 @@
 #include "Rectangle.h"
 #include "Line.h"
 #include "Polygon.h"
+#include "Circle.h"
 #include "FloodFill.h"
 #include "Drawable.h"
 #include <stdio.h>
@@ -129,6 +130,9 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                 break;
             }
             case Tool::CIRCLE: {
+                Context::getInstance()->addDrawable(
+                    std::make_shared<Circle>(clickPoint, 25, currentColor)
+                );
                 break;
             }
             case Tool::CURVE: {
