@@ -7,6 +7,7 @@
 #include "ToolMenu.h"
 #include "Color.h"
 #include "Rectangle.h"
+#include "Circle.h"
 #include "Polygon.h"
 
 SDL_Window* pWindow = nullptr;
@@ -20,6 +21,11 @@ void display()
         figure->draw();
         figure->drawBoundary(Color(0, 0, 255));
     }
+
+
+    Circle circle = Circle(Point(100, 100), 50, Color(0, 0, 255));
+    circle.draw();
+    circle.drawBoundary(Color(0, 0, 255));
 
     std::shared_ptr<Shape> selectedShape = Context::getInstance()->getSelectedFigure();
     if (selectedShape) {
