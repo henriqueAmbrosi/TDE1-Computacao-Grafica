@@ -58,7 +58,7 @@ void Line::draw() {
     std::list<Point> localPoints = { this->start, this->end };
     std::list<Point> transformedPoints = transform(localPoints, this->start);
 
-    auto it = transformedPoints.begin();
+    std::list<Point>::iterator it = transformedPoints.begin();
     Point p1 = *it;
     std::advance(it, 1);
     Point p2 = *it;
@@ -76,7 +76,7 @@ void Line::drawBoundary(Color color) {
     std::list<Point> localPoints = { this->start, this->end };
     std::list<Point> transformedPoints = transform(localPoints, this->start);
 
-    auto it = transformedPoints.begin();
+    std::list<Point>::iterator it = transformedPoints.begin();
     Point p1 = *it;
     std::advance(it, 1);
     Point p2 = *it;
@@ -103,9 +103,9 @@ void Line::drawBoundary(Color color) {
 bool Line::isInBoundary(Point point) {
     std::list<Point> localPoints = { this->start, this->end };
     std::list<Point> transformedPoints = transform(localPoints, this->start);
-    float toleranceInPx = 5.0f
+    float toleranceInPx = 5.0f;
 
-    auto it = transformedPoints.begin();
+    std::list<Point>::iterator it = transformedPoints.begin();
     Point p1 = *it;
     std::advance(it, 1);
     Point p2 = *it;
