@@ -8,6 +8,7 @@
 #include "Paint.h"
 #include "Drawable.h"
 #include "ToolMenu.h"
+#include "BezierCurve.h"
 #include <stdio.h>
 #include <memory>
 
@@ -153,6 +154,17 @@ void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
 
 }
 
+void Events::finishCurve() {
+    Color currentColor = Context::getInstance()->getSelectedColor();
+
+    auto curve = std::make_shared<BezierCurve>(tempPolygonPoints, currentColor);
+
+    resetPolygonCreation();
+
+    Context::getInstance()->addDrawable(curve);
+    printf("Curve completed with success!\n");
+}
+
 void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
 {
     Tool activeTool = Context::getInstance()->getSelectedTool();
@@ -197,6 +209,20 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                 break;
             }
             case Tool::CURVE: {
+                if (!tempPolygonPoints.empty()) {
+                    // Desenha uma linha provisória ligando o último ponto ao novo clique
+                    Point lastPoint = tempPolygonPoints.back();
+                    auto linePreview = std::make_shared<Line>(lastPoint, clickPoint, currentColor, 1);
+                    
+                    Context::getInstance()->addDrawable(linePreview);
+                    tempPolygonLines.push_back(linePreview);
+                }
+
+                tempPolygonPoints.push_back(clickPoint);
+                if (tempPolygonPoints.size() == 4) {
+                    finishCurve();
+                }
+                printf("Curve point added: (%d, %d)\n", clickPoint.getX(), clickPoint.getY());
                 break;
             }
             case Tool::POLYGON: {

@@ -3,6 +3,7 @@
 #include "Line.h"
 #include "Circle.h"
 #include "Polygon.h"
+#include "BezierCurve.h"
 #include <list>
 
 Icon::Icon()
@@ -88,15 +89,6 @@ void Icon::drawCircleIcon(Point center)
     circle.draw();
 }
 
-void Icon::drawCurveIcon(Point center)
-{
-    int size = 8;
-    int cx = center.getX();
-    int cy = center.getY();
-    Line line(Point(cx - size, cy + size), Point(cx + size, cy - size), this->color);
-    line.draw();
-}
-
 void Icon::drawPolygonIcon(Point center)
 {
     int cx = center.getX();
@@ -136,6 +128,21 @@ void Icon::drawSelectIcon(Point center)
 
     Polygon pointer(points, this->color);
     pointer.draw();
+}
+
+void Icon::drawCurveIcon(Point center) {
+    int cx = center.getX();
+    int cy = center.getY();
+
+    std::list<Point> points = {
+        Point(cx - 4, cy - 7),
+        Point(cx - 4, cy + 5),
+        Point(cx - 1, cy + 2),
+        Point(cx + 2, cy + 7)
+    };
+
+    BezierCurve b = BezierCurve(points, color);
+    b.draw();
 }
 
 void Icon::drawPaintIcon(Point center)

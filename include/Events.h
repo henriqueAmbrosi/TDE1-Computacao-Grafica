@@ -25,6 +25,7 @@ private:
 
     void resetPolygonCreation();
     void finishPolygon();
+    void finishCurve();
 };
 
 #endif // EVENTS_H
