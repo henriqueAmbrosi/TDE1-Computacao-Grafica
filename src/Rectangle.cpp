@@ -2,6 +2,7 @@
 #include <list>
 #include "Line.h"
 #include "Color.h"
+#include <stdio.h>
 
 Rectangle::Rectangle() {
     this->antialias = 0;
@@ -107,6 +108,18 @@ Point Rectangle::inflate(Point p) {
 
 Color Rectangle::getColor(){
     return this->color;
+}
+
+void Rectangle::setColor(Color c){
+    this->color = c;
+}
+
+Point Rectangle::getStartPoint(){
+    return this->start;
+}
+
+Point Rectangle::getEndPoint(){
+    return this->end;
 }
 
 void Rectangle::drawBoundary(Color color)
