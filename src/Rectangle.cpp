@@ -43,14 +43,14 @@ void Rectangle::draw()
 
     int i = 0;
     for (i = 0; i < 3; i++) {
-        localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+        localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
         std::advance(itlp, 1);
         std::advance(itlp2, 1);
         std::advance(itll, 1);
     }
 
     itlp2 = transformedPoints.begin();
-    localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+    localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
 
     itll = localLines.begin();
     for (i = 0; i < 3; i++) {
@@ -77,14 +77,14 @@ void Rectangle::drawWithPivot(Point pivot)
 
     int i = 0;
     for (i = 0; i < 3; i++) {
-        localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+        localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
         std::advance(itlp, 1);
         std::advance(itlp2, 1);
         std::advance(itll, 1);
     }
 
     itlp2 = transformedPoints.begin();
-    localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+    localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
 
     itll = localLines.begin();
     for (i = 0; i < 3; i++) {

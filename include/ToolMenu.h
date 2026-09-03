@@ -18,6 +18,7 @@ public:
     bool isInBoundary(Point clickedPoint);
 private:
     Rectangle container;
+    Button saveButton;
     std::list<Button> toolButtons;
     Line separator;
     std::list<Button> colorButtons;

@@ -48,9 +48,6 @@ public:
     void addDrawable(std::shared_ptr<Drawable> drawable);
     void removeDrawable(std::shared_ptr<Drawable> drawable);
 
-    bool isMenuVisible();
-    void setMenuVisible(bool menuVisible);
-
 private:
     Context();
     ~Context();
@@ -64,7 +61,6 @@ private:
     ToolMenu toolMenu;
     std::shared_ptr<Shape> selectedFigure;
     std::list<std::shared_ptr<Drawable>> drawables;
-    bool menuVisible;
 };
 
 #endif // CONTEXT_H

@@ -65,6 +65,9 @@ void Icon::drawAt(Point center)
         case IconType::COLOR:
             this->drawColorIcon(center);
             break;
+        case IconType::SAVE:
+            this->drawSaveIcon(center);
+            break;
     }
 }
 
@@ -145,26 +148,67 @@ void Icon::drawSelectIcon(Point center)
     pointer.draw();
 }
 
-void Icon::drawCurveIcon(Point center) {
+void Icon::drawCurveIcon(Point center)
+{
     int cx = center.getX();
     int cy = center.getY();
 
-    std::list<Point> points = {
-        Point(cx - 4, cy - 7),
-        Point(cx - 4, cy + 5),
-        Point(cx - 1, cy + 2),
-        Point(cx + 2, cy + 7)
+    std::list<Point> curvePoints = {
+        Point(cx - 6, cy + 3),
+        Point(cx - 2, cy - 9),
+        Point(cx + 2, cy + 9),
+        Point(cx + 6, cy - 3)
     };
 
-    BezierCurve b = BezierCurve(points, color);
-    b.draw();
+    BezierCurve curve(curvePoints, this->color);
+    curve.draw();
 }
 
 void Icon::drawPaintIcon(Point center)
 {
-    int size = 4;
-    Circle bucket(center, size, this->color);
-    bucket.draw();
+    int cx = center.getX();
+    int cy = center.getY();
+
+    Rectangle bucket(Point(cx - 8, cy - 5), Point(cx - 1, cy + 4), this->color);
+    bucket.setRotation(45);
+    bucket.drawWithPivot(Point(cx - 4, cy - 1));
+
+    Point dropTop(cx + 3, cy + 1);
+    Point dropBottom(cx + 3, cy + 7);
+
+    std::list<Point> leftCurvePoints = {
+        dropTop,
+        Point(cx + 0, cy + 3),
+        Point(cx + 0, cy + 6),
+        dropBottom
+    };
+    BezierCurve leftCurve(leftCurvePoints, this->color);
+    leftCurve.draw();
+
+    std::list<Point> rightCurvePoints = {
+        dropTop,
+        Point(cx + 6, cy + 3),
+        Point(cx + 6, cy + 6),
+        dropBottom
+    };
+    BezierCurve rightCurve(rightCurvePoints, this->color);
+    rightCurve.draw();
+}
+
+void Icon::drawSaveIcon(Point center)
+{
+    int cx = center.getX();
+    int cy = center.getY();
+    int size = 7;
+
+    Rectangle body(Point(cx - size, cy - size), Point(cx + size, cy + size), this->color);
+    body.draw();
+
+    Rectangle topNotch(Point(cx - 4, cy - size), Point(cx + 2, cy - 2), this->color);
+    topNotch.draw();
+
+    Rectangle labelArea(Point(cx - 4, cy + 1), Point(cx + 4, cy + size), this->color);
+    labelArea.draw();
 }
 
 IconType Icon::getType()

@@ -8,7 +8,6 @@ Context::Context() {
     this->selectedColor = Color(0, 0, 0);
     this->selectedTool = Tool::RECTANGLE;
     this->selectedFigure = nullptr;
-    this->menuVisible = true;
 }
 
 Context::~Context() {
@@ -77,12 +76,4 @@ void Context::removeDrawable(std::shared_ptr<Drawable> drawable) {
     if (drawable) {
         this->drawables.remove(drawable);
     }
-}
-
-bool Context::isMenuVisible() {
-    return this->menuVisible;
-}
-
-void Context::setMenuVisible(bool menuVisible) {
-    this->menuVisible = menuVisible;
 }

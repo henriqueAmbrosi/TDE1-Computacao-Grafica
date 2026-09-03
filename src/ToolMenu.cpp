@@ -6,6 +6,7 @@
 #include "Paint.h"
 #include "Icon.h"
 #include "Line.h"
+#include "ImageSaver.h"
 
 struct ToolMenuItem {
     Tool tool;
@@ -48,15 +49,14 @@ ToolMenu::ToolMenu()
     this->container = Rectangle(p1, p2, menuColor);    
  
     Color iconColor = Color(10, 10, 10);
-    int startX = 10;
-    int btnWidth = 26;
-    int btnHeight = 26;
-    int startY = 7;
-    int gap = 6;
+    int startX = 7;
+    int btnWidth = 24;
+    int btnHeight = 24;
+    int startY = 8;
+    int gap = 7;
     int i = 0;
 
     for (const auto& item : menuItems) {
-
         int x1 = startX + i * (btnWidth + gap);
         int y1 = startY;
         int x2 = x1 + btnWidth;
@@ -73,6 +73,33 @@ ToolMenu::ToolMenu()
         i++;
     }
 
+    Icon saveIcon(IconType::SAVE, Color(10, 10, 10));
+
+    int saveX1 = startX + i * (btnWidth + gap);
+    int saveY1 = startY;
+    int saveX2 = saveX1 + btnWidth;
+    int saveY2 = saveY1 + btnHeight;
+
+    Button saveButton(Point(saveX1, saveY1), Point(saveX2, saveY2), btnColor, saveIcon, []() {
+        Context* context = Context::getInstance();
+        SDL_Surface* surface = context->getWindowSurface();
+
+        if (!surface) return;
+
+        SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 255, 255));
+
+        for (std::shared_ptr<Drawable>& figure : context->getDrawables()) {
+            if (figure) {
+                figure->draw();
+            }
+        }
+
+        ImageSaver::saveCanvas(surface);
+    });
+
+    this->saveButton = saveButton;
+    
+    i++;
     int xToolBtnEnd = startX + i * (btnWidth + gap);
     p1 = Point(xToolBtnEnd, 5);
     p2 = Point(xToolBtnEnd, 35);
@@ -83,7 +110,6 @@ ToolMenu::ToolMenu()
     int colorButtonsXStart = xToolBtnEnd + 1 + gap;
     i = 0;
     for (Color color : colorOptions) {
-
         int x1 = colorButtonsXStart + i * (btnWidth + gap);
         int y1 = startY;
         int x2 = x1 + btnWidth;
@@ -99,29 +125,25 @@ ToolMenu::ToolMenu()
         this->colorButtons.push_back(button);
         i++;
     }
-
 }
 
 ToolMenu::~ToolMenu()
 {
 }
 
-
 void ToolMenu::onClick(Point clickedPoint){
-    int i = 0;
     for (Button& button : this->toolButtons) {
         if (button.clicked(clickedPoint)) {
             break;
         }
-        i++;
     }
 
-    i = 0;
+    this->saveButton.clicked(clickedPoint);
+
     for (Button& button : this->colorButtons) {
         if (button.clicked(clickedPoint)) {
             break;
         }
-        i++;
     }
 }
 
@@ -133,14 +155,14 @@ void ToolMenu::draw()
 {   
     this->container.draw();
     Paint paint;
-    paint.forceFill(Point(1, 20), this->container.getColor(),this->container.getColor());
+    paint.forceFill(Point(1, 20), this->container.getColor(), this->container.getColor());
 
     Tool currentTool = Context::getInstance()->getSelectedTool();
     Color currentColor = Context::getInstance()->getSelectedColor();
 
     int i = 0;
     for (Button& button : this->toolButtons) {
-        if(menuItems[i].tool == currentTool){
+        if (menuItems[i].tool == currentTool) {
             button.setColor(btnSelectedColor);
         } else {
             button.setColor(btnColor);
@@ -149,11 +171,12 @@ void ToolMenu::draw()
         i++;
     }
 
+    this->saveButton.draw();
     this->separator.draw();
 
     i = 0;
     for (Button& button : this->colorButtons) {
-        if(colorOptions[i].getColor() == currentColor.getColor()){
+        if (colorOptions[i].getColor() == currentColor.getColor()) {
             button.setColor(btnSelectedColor);
         } else {
             button.setColor(btnColor);

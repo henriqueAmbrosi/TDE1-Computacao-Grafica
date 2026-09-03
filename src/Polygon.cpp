@@ -30,14 +30,14 @@ void Polygon::draw()
     int size, i = 0;
     size = transformedPoints.size() - 1;
     for (i = 0; i < size; i++) {
-        localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+        localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
         std::advance(itlp, 1);
         std::advance(itlp2, 1);
         std::advance(itll, 1);
     }
 
     itlp2 = transformedPoints.begin();
-    localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+    localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
 
     itll = localLines.begin();
     for (i = 0; i < size; i++) {
@@ -60,14 +60,14 @@ void Polygon::drawWithPivot(Point pivot) {
     int size, i = 0;
     size = transformedPoints.size() - 1;
     for (i = 0; i < size; i++) {
-        localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+        localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
         std::advance(itlp, 1);
         std::advance(itlp2, 1);
         std::advance(itll, 1);
     }
 
     itlp2 = transformedPoints.begin();
-    localLines.insert(itll, Line(*itlp, *itlp2, this->color));
+    localLines.insert(itll, Line(*itlp, *itlp2, this->color, 1));
 
     itll = localLines.begin();
     for (i = 0; i < size; i++) {
