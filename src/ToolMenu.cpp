@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Paint.h"
 #include "Icon.h"
+#include "Line.h"
 
 struct ToolMenuItem {
     Tool tool;
@@ -21,6 +22,21 @@ ToolMenuItem menuItems[] = {
     { Tool::PAINT, IconType::PAINT }
 };
 
+Color colorOptions[] = {
+    Color(0, 0, 0),       // Preto
+    Color(255, 255, 255), // Branco
+    Color(128, 128, 128), // Cinza Médio
+    Color(139, 69, 19),   // Marrom
+    Color(230, 40, 40),   // Vermelho
+    Color(255, 128, 0),   // Laranja
+    Color(255, 215, 0),   // Amarelo
+    Color(46, 204, 113),  // Verde
+    Color(52, 152, 219),  // Azul Céu
+    Color(15, 82, 186),   // Azul Marinho
+    Color(155, 89, 182),  // Roxo
+    Color(255, 105, 180)  // Rosa
+};
+
 Color btnSelectedColor = Color(60, 132, 214);
 Color btnColor = Color(160, 160, 160);
 
@@ -30,13 +46,13 @@ ToolMenu::ToolMenu()
     Point p2 = Point(640, 40);
     Color menuColor = Color(200, 200, 200);
     this->container = Rectangle(p1, p2, menuColor);    
-
+ 
     Color iconColor = Color(10, 10, 10);
     int startX = 10;
-    int btnWidth = 35;
-    int btnHeight = 30;
-    int startY = 5;
-    int gap = 10;
+    int btnWidth = 26;
+    int btnHeight = 26;
+    int startY = 7;
+    int gap = 6;
     int i = 0;
 
     for (const auto& item : menuItems) {
@@ -53,9 +69,37 @@ ToolMenu::ToolMenu()
             Context::getInstance()->setSelectedTool(targetTool);
         });
 
-        this->buttons.push_back(button);
+        this->toolButtons.push_back(button);
         i++;
     }
+
+    int xToolBtnEnd = startX + i * (btnWidth + gap);
+    p1 = Point(xToolBtnEnd, 5);
+    p2 = Point(xToolBtnEnd, 35);
+    Color separatorColor = Color(180, 180, 180);
+    Line separator = Line(p1, p2, separatorColor);
+    this->separator = separator;
+
+    int colorButtonsXStart = xToolBtnEnd + 1 + gap;
+    i = 0;
+    for (Color color : colorOptions) {
+
+        int x1 = colorButtonsXStart + i * (btnWidth + gap);
+        int y1 = startY;
+        int x2 = x1 + btnWidth;
+        int y2 = y1 + btnHeight;
+
+        Icon icon = Icon(IconType::COLOR, color);
+
+        Button button(Point(x1, y1), Point(x2, y2), btnColor, icon, [color]() {
+            Color tempColor = color;
+            Context::getInstance()->setSelectedColor(tempColor);
+        });
+
+        this->colorButtons.push_back(button);
+        i++;
+    }
+
 }
 
 ToolMenu::~ToolMenu()
@@ -64,10 +108,20 @@ ToolMenu::~ToolMenu()
 
 
 void ToolMenu::onClick(Point clickedPoint){
-    for (Button& button : this->buttons) {
+    int i = 0;
+    for (Button& button : this->toolButtons) {
         if (button.clicked(clickedPoint)) {
             break;
         }
+        i++;
+    }
+
+    i = 0;
+    for (Button& button : this->colorButtons) {
+        if (button.clicked(clickedPoint)) {
+            break;
+        }
+        i++;
     }
 }
 
@@ -81,8 +135,30 @@ void ToolMenu::draw()
     Paint paint;
     paint.forceFill(Point(1, 20), this->container.getColor(),this->container.getColor());
 
-    for (Button& button : this->buttons) {
+    Tool currentTool = Context::getInstance()->getSelectedTool();
+    Color currentColor = Context::getInstance()->getSelectedColor();
+
+    int i = 0;
+    for (Button& button : this->toolButtons) {
+        if(menuItems[i].tool == currentTool){
+            button.setColor(btnSelectedColor);
+        } else {
+            button.setColor(btnColor);
+        }
         button.draw();
+        i++;
     }
 
+    this->separator.draw();
+
+    i = 0;
+    for (Button& button : this->colorButtons) {
+        if(colorOptions[i].getColor() == currentColor.getColor()){
+            button.setColor(btnSelectedColor);
+        } else {
+            button.setColor(btnColor);
+        }
+        button.draw();
+        i++;
+    }
 }

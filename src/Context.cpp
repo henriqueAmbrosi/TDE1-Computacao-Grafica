@@ -5,7 +5,7 @@ Context* Context::instance = nullptr;
 Context::Context() {
     this->window_surface = nullptr;
     this->pRenderer = nullptr;
-    this->selectedColor = Color(255, 0, 0);
+    this->selectedColor = Color(0, 0, 0);
     this->selectedTool = Tool::RECTANGLE;
     this->selectedFigure = nullptr;
     this->menuVisible = true;

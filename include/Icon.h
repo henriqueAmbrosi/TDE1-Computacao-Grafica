@@ -12,7 +12,8 @@ enum class IconType {
     CURVE,
     POLYGON,
     SELECT,
-    PAINT
+    PAINT,
+    COLOR
 };
 
 class Icon : public Drawable
@@ -42,6 +43,7 @@ private:
     void drawPolygonIcon(Point center);
     void drawSelectIcon(Point center);
     void drawPaintIcon(Point center);
+    void drawColorIcon(Point center);
 };
 
 #endif // ICON_H

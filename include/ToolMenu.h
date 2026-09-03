@@ -4,6 +4,7 @@
 #include "Point.h"
 #include "Rectangle.h"
 #include "Button.h"
+#include "Line.h"
 #include <list>
 
 class ToolMenu
@@ -17,7 +18,9 @@ public:
     bool isInBoundary(Point clickedPoint);
 private:
     Rectangle container;
-    std::list<Button> buttons;
+    std::list<Button> toolButtons;
+    Line separator;
+    std::list<Button> colorButtons;
 };
 
 #endif // TOOLMENU_H

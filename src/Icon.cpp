@@ -3,6 +3,7 @@
 #include "Line.h"
 #include "Circle.h"
 #include "Polygon.h"
+#include "Paint.h"
 #include "BezierCurve.h"
 #include <list>
 
@@ -61,7 +62,21 @@ void Icon::drawAt(Point center)
         case IconType::PAINT:
             this->drawPaintIcon(center);
             break;
+        case IconType::COLOR:
+            this->drawColorIcon(center);
+            break;
     }
+}
+
+void Icon::drawColorIcon(Point center)
+{
+    int size = 8;
+    int cx = center.getX();
+    int cy = center.getY();
+    Rectangle rect(Point(cx - size, cy - size), Point(cx + size, cy + size), this->color);
+    rect.draw();
+    Paint p = Paint();
+    p.fill(cx, cy, this->color);
 }
 
 void Icon::drawRectangleIcon(Point center)
