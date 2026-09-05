@@ -28,6 +28,7 @@ class Shape: public Drawable
         Point getTranslation();
         float getRotation();
         float* getScale();
+        void addMouseClickAnchorsUntransformed(Point start, Point end, Point pivot, Color color);
         virtual void getLocalSize(float& width, float& height);
         Anchor inAnchors(Point point);
         

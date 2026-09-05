@@ -125,7 +125,7 @@ Point Rectangle::getEndPoint(){
 
 void Rectangle::drawBoundary(Color color)
 {
-    Rectangle rect = Rectangle(inflate(start), inflate(end), color);
+    Rectangle rect = Rectangle(start, end, color);
     rect.setRotation(this->getRotation());
     rect.setTranslation(this->getTranslation());
     rect.setScale(this->getScale()[0], this->getScale()[1]);
@@ -136,6 +136,14 @@ void Rectangle::drawBoundary(Color color)
 
 bool Rectangle::isInBoundary(Point point)
 {
+    std::list<Point> localPoints = { start, end };
+    std::list<Point> transformedPoints = transform(localPoints, start);
+    std::list<Point>::iterator itlp = transformedPoints.begin();
+
+    Point start = *itlp;
+    std::advance(itlp, 1);
+    Point end = *itlp;
+
     if (this->inAnchors(point) != Anchor::NONE) {
         return true;
     }

@@ -103,12 +103,9 @@ void Polygon::drawBoundary(Color color) {
     }
 
     Rectangle rect = Rectangle(Point(minX, minY), Point(maxX, maxY), color);
-    rect.setRotation(this->getRotation());
-    rect.setTranslation(this->getTranslation());
-    rect.setScale(this->getScale()[0], this->getScale()[1]);
     rect.drawWithPivot(this->points.front());
 
-    addMouseClickAnchors(Point(minX, minY), Point(maxX, maxY), this->points.front(), color);
+    addMouseClickAnchorsUntransformed(Point(minX, minY), Point(maxX, maxY), this->points.front(), color);
 }
 
 bool Polygon::isInBoundary(Point point) {
@@ -162,6 +159,6 @@ void Polygon::getLocalSize(float& width, float& height)
         if (p.getY() > maxY) maxY = p.getY();
     }
 
-    width = static_cast<float>(std::max(1, maxX - minX));
-    height = static_cast<float>(std::max(1, maxY - minY));
+    width = (float) (std::max(1, maxX - minX));
+    height = (float) (std::max(1, maxY - minY));
 }

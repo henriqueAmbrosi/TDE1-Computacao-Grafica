@@ -216,7 +216,8 @@ void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
         int dx = currentPoint.getX() - init.getX();
         int dy = currentPoint.getY() - init.getY();
 
-        shape->setTranslation(Point(shape->getTranslation().getX() + dx, shape->getTranslation().getY() + dy));
+        Point start = ctx->getDragStartTranslation();
+        shape->setTranslation(Point(start.getX() + dx, start.getY() + dy));
         return;
     }
 
@@ -247,9 +248,11 @@ void Events::handleMouseButtonDown(SDL_MouseButtonEvent& mouseEvent)
 
                 Anchor anchor = selected->inAnchors(clickPoint);
 
-                if (selected->isInBoundary(clickPoint) && anchor == Anchor::NONE) {
+                if (selected->isInBoundary(clickPoint) && anchor == Anchor::NONE && !Context::getInstance()->isDragging()) {
                     Context::getInstance()->setIsDragging(true);
+                    Context::getInstance()->setIsResizing(false);
                     Context::getInstance()->setInitialDragPoint(clickPoint);
+                    Context::getInstance()->setDragStartTranslation(selected->getTranslation());
                     return;
                 }
 
@@ -370,6 +373,8 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
 
                 if (!found) {
                     Context::getInstance()->setSelectedFigure(nullptr);
+                    Context::getInstance()->setIsDragging(false);
+                    Context::getInstance()->setIsResizing(false);
                     printf("Selection cleared.\n");
                 }
                 break;

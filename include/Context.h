@@ -68,6 +68,8 @@ public:
     void setIsDragging(bool isDragging);
     void setInitialDragPoint(Point point);
     Point getInitialDragPoint();
+    void setDragStartTranslation(Point translation);
+    Point getDragStartTranslation();
 
 private:
     Context();
@@ -92,6 +94,7 @@ private:
     float resizeRefHeight;
     bool dragging;
     Point initialDragPoint;
+    Point dragStartTranslation;
 };
 
 #endif // CONTEXT_H

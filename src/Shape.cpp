@@ -171,7 +171,26 @@ void Shape::addMouseClickAnchors(Point start, Point end, Point pivot, Color colo
         anchorStart.setY(anchorStart.getY() - 5);
         rI = anchors.insert(rI, Rectangle(anchorStart, anchorEnd, color));
         (*rI).draw();
-        // Todo | add flood fill
+        std::advance(ittp, 1);
+        std::advance(rI, 1);
+    }
+}
+
+void Shape::addMouseClickAnchorsUntransformed(Point start, Point end, Point pivot, Color color) {
+    std::list<Rectangle>::iterator rI = this->anchors.begin();
+
+    std::list<Point> transformedPoints = { start, Point(end.getX(), start.getY()), end, Point(start.getX(), end.getY()) };
+    std::list<Point>::iterator ittp = transformedPoints.begin();
+
+    int i = 0, size = transformedPoints.size();
+    for (i = 0; i < size; i++) {
+        Point anchorStart = *ittp, anchorEnd = *ittp;
+        anchorEnd.setX(anchorEnd.getX() + 5);
+        anchorEnd.setY(anchorEnd.getY() + 5);
+        anchorStart.setX(anchorStart.getX() - 5);
+        anchorStart.setY(anchorStart.getY() - 5);
+        rI = anchors.insert(rI, Rectangle(anchorStart, anchorEnd, color));
+        (*rI).draw();
         std::advance(ittp, 1);
         std::advance(rI, 1);
     }

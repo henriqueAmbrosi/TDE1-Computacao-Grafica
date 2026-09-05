@@ -57,7 +57,12 @@ void Circle::draw() {
     int scaledRadius = (int) radius * this->getScale()[0];
     int x = 0, y = scaledRadius;
     int decisionParameter = 3 - 2 * scaledRadius;
-    displayBresenhamCircle(center.getX(), center.getY(), x, y, color);
+
+    std::list<Point> localPoints = { this->center };
+    std::list<Point> transformedPoints = transform(localPoints, this->center);
+    std::list<Point>::iterator itlp = transformedPoints.begin();
+
+    displayBresenhamCircle((*itlp).getX(), (*itlp).getY(), x, y, color);
  
     while (y >= x) {
         x++;
@@ -68,7 +73,7 @@ void Circle::draw() {
             decisionParameter = decisionParameter + 4 * x + 6;
         }
         
-        displayBresenhamCircle(center.getX(), center.getY(), x, y, color);
+        displayBresenhamCircle((*itlp).getX(), (*itlp).getY(), x, y, color);
     }
 }
 
@@ -90,7 +95,11 @@ void Circle::drawBoundary(Color color) {
 }
 
 bool Circle::isInBoundary(Point point) {
-    return sqrt(pow(point.getX() - this->center.getX(), 2) + pow(point.getY() - this->center.getY(), 2)) <= this->radius;
+    std::list<Point> localPoints = { this->center };
+    std::list<Point> transformedPoints = transform(localPoints, this->center);
+    std::list<Point>::iterator itlp = transformedPoints.begin();
+
+    return sqrt(pow(point.getX() - (*itlp).getX(), 2) + pow(point.getY() - (*itlp).getY(), 2)) <= this->radius * this->getScale()[0];
 }
 
 void Circle::getLocalSize(float& width, float& height)

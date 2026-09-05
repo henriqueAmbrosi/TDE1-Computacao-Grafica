@@ -158,3 +158,11 @@ void Context::setInitialDragPoint(Point point) {
 Point Context::getInitialDragPoint() {
     return this->initialDragPoint;
 }
+
+void Context::setDragStartTranslation(Point translation) {
+    this->dragStartTranslation = translation;
+}
+
+Point Context::getDragStartTranslation() {
+    return this->dragStartTranslation;
+}
