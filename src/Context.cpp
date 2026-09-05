@@ -142,3 +142,19 @@ float Context::getResizeRefWidth() {
 float Context::getResizeRefHeight() {
     return this->resizeRefHeight;
 }
+
+bool Context::isDragging() {
+    return this->dragging;
+}
+
+void Context::setIsDragging(bool isDragging) {
+    this->dragging = isDragging;
+}
+
+void Context::setInitialDragPoint(Point point) {
+    this->initialDragPoint = point;
+}
+
+Point Context::getInitialDragPoint() {
+    return this->initialDragPoint;
+}

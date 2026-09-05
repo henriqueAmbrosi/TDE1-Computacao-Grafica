@@ -13,9 +13,9 @@ class Polygon : public Shape
         virtual ~Polygon();
         void draw() override;
         void drawWithPivot(Point pivot);
-        bool isInBoundary(Point point);
+        bool isInBoundary(Point point) override;
         void getLocalSize(float& width, float& height) override;
-        void drawBoundary(Color color);
+        void drawBoundary(Color color) override;
 
     protected:
         std::list<Point> points;

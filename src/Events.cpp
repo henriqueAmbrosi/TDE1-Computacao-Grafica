@@ -157,10 +157,10 @@ void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
 
 void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
 {
+    Point currentPoint = Point(motionEvent.x, motionEvent.y);
+    Context* ctx = Context::getInstance();
+    std::shared_ptr<Shape> shape = ctx->getSelectedFigure();
     if (Context::getInstance()->isResizing()) {
-        Point currentPoint = Point(motionEvent.x, motionEvent.y);
-        Context* ctx = Context::getInstance();
-        std::shared_ptr<Shape> shape = ctx->getSelectedFigure();
         Point init = ctx->getInitalResizePoint();
         int dx = currentPoint.getX() - init.getX();
         int dy = currentPoint.getY() - init.getY();
@@ -207,7 +207,19 @@ void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
             scaleY = minScale;
         }
     
-        shape->setScale(scaleX, scaleY);    }
+        shape->setScale(scaleX, scaleY);
+        return;
+    }
+
+    if (Context::getInstance()->isDragging()) {
+        Point init = ctx->getInitialDragPoint();
+        int dx = currentPoint.getX() - init.getX();
+        int dy = currentPoint.getY() - init.getY();
+
+        shape->setTranslation(Point(shape->getTranslation().getX() + dx, shape->getTranslation().getY() + dy));
+        return;
+    }
+
 }
 
 void Events::finishCurve() {
@@ -234,6 +246,13 @@ void Events::handleMouseButtonDown(SDL_MouseButtonEvent& mouseEvent)
                 }
 
                 Anchor anchor = selected->inAnchors(clickPoint);
+
+                if (selected->isInBoundary(clickPoint) && anchor == Anchor::NONE) {
+                    Context::getInstance()->setIsDragging(true);
+                    Context::getInstance()->setInitialDragPoint(clickPoint);
+                    return;
+                }
+
                 if (anchor == Anchor::NONE) {
                     return;
                 }
@@ -329,6 +348,10 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
             case Tool::SELECT: {
                 if (Context::getInstance()->isResizing()) {
                     Context::getInstance()->setIsResizing(false);
+                    break;
+                }
+                if (Context::getInstance()->isDragging()) {
+                    Context::getInstance()->setIsDragging(false);
                     break;
                 }
 

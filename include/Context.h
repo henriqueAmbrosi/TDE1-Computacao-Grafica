@@ -64,6 +64,11 @@ public:
     float getResizeRefWidth();
     float getResizeRefHeight();
 
+    bool isDragging();
+    void setIsDragging(bool isDragging);
+    void setInitialDragPoint(Point point);
+    Point getInitialDragPoint();
+
 private:
     Context();
     ~Context();
@@ -85,6 +90,8 @@ private:
     float resizeStartScaleY;
     float resizeRefWidth;
     float resizeRefHeight;
+    bool dragging;
+    Point initialDragPoint;
 };
 
 #endif // CONTEXT_H
