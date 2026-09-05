@@ -101,6 +101,10 @@ void Line::drawBoundary(Color color) {
 }
 
 bool Line::isInBoundary(Point point) {
+    if (this->inAnchors(point) != Anchor::NONE) {
+        return true;
+    }
+
     std::list<Point> localPoints = { this->start, this->end };
     std::list<Point> transformedPoints = transform(localPoints, this->start);
     float toleranceInPx = 5.0f;
@@ -139,6 +143,12 @@ bool Line::isInBoundary(Point point) {
 
     double distance = std::sqrt((px - projX) * (px - projX) + (py - projY) * (py - projY));
     return distance <= toleranceInPx;
+}
+
+void Line::getLocalSize(float& width, float& height)
+{
+    width = static_cast<float>(std::abs(end.getX() - start.getX()));
+    height = static_cast<float>(std::abs(end.getY() - start.getY()));
 }
 
 Uint32 Line::getPixel(int x, int y) {

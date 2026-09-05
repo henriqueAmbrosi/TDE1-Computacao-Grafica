@@ -13,6 +13,7 @@ class Circle : public Shape
         void setPixel(int x, int y, int r, int g, int b, int a);
         void draw() override;
         bool isInBoundary(Point point) override;
+        void getLocalSize(float& width, float& height) override;
         void drawBoundary(Color color) override;
         virtual ~Circle();
 

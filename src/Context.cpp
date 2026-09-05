@@ -8,6 +8,13 @@ Context::Context() {
     this->selectedColor = Color(0, 0, 0);
     this->selectedTool = Tool::RECTANGLE;
     this->selectedFigure = nullptr;
+    this->menuVisible = true;
+    this->resizing = false;
+    this->resizeAnchor = Anchor::NONE;
+    this->resizeStartScaleX = 1.0f;
+    this->resizeStartScaleY = 1.0f;
+    this->resizeRefWidth = 1.0f;
+    this->resizeRefHeight = 1.0f;
 }
 
 Context::~Context() {
@@ -76,4 +83,62 @@ void Context::removeDrawable(std::shared_ptr<Drawable> drawable) {
     if (drawable) {
         this->drawables.remove(drawable);
     }
+}
+
+bool Context::isMenuVisible() {
+    return this->menuVisible;
+}
+
+void Context::setMenuVisible(bool menuVisible) {
+    this->menuVisible = menuVisible;
+}
+
+bool Context::isResizing() {
+    return this->resizing;
+}
+
+void Context::setIsResizing(bool isResizing) {
+    this->resizing = isResizing;
+}
+
+Point Context::getInitalResizePoint() {
+    return this->initialResizePoint;
+}
+
+void Context::setInitialResizePoint(Point initalResizePoint) {
+    this->initialResizePoint = initalResizePoint;
+}
+
+void Context::setResizeAnchor(Anchor anchor) {
+    this->resizeAnchor = anchor;
+}
+
+Anchor Context::getResizeAnchor() {
+    return this->resizeAnchor;
+}
+
+void Context::setResizeStartScale(float x, float y) {
+    this->resizeStartScaleX = x;
+    this->resizeStartScaleY = y;
+}
+
+float Context::getResizeStartScaleX() {
+    return this->resizeStartScaleX;
+}
+
+float Context::getResizeStartScaleY() {
+    return this->resizeStartScaleY;
+}
+
+void Context::setResizeRefSize(float width, float height) {
+    this->resizeRefWidth = width;
+    this->resizeRefHeight = height;
+}
+
+float Context::getResizeRefWidth() {
+    return this->resizeRefWidth;
+}
+
+float Context::getResizeRefHeight() {
+    return this->resizeRefHeight;
 }

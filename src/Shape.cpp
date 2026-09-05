@@ -83,6 +83,12 @@ float* Shape::getScale()
     return this->scale;
 }
 
+void Shape::getLocalSize(float& width, float& height)
+{
+    width = 100.0f;
+    height = 100.0f;
+}
+
 void Shape::multiplyMatrix3x3(float A[3][3], float B[3][3], float result[3][3]) {
     for (int i = 0; i < 3; ++i) {
         for (int j = 0; j < 3; ++j) {
@@ -151,8 +157,7 @@ std::list<Point> Shape::getBoundaryPointsList(Point start, Point end, Point pivo
 }
 
 void Shape::addMouseClickAnchors(Point start, Point end, Point pivot, Color color) {
-    std::list<Rectangle> rects = {};
-    std::list<Rectangle>::iterator rI = rects.begin();
+    std::list<Rectangle>::iterator rI = this->anchors.begin();
 
     std::list<Point> transformedPoints = getBoundaryPointsList(start, end, pivot);
     std::list<Point>::iterator ittp = transformedPoints.begin();
@@ -164,10 +169,24 @@ void Shape::addMouseClickAnchors(Point start, Point end, Point pivot, Color colo
         anchorEnd.setY(anchorEnd.getY() + 5);
         anchorStart.setX(anchorStart.getX() - 5);
         anchorStart.setY(anchorStart.getY() - 5);
-        rI = rects.insert(rI, Rectangle(anchorStart, anchorEnd, color));
+        rI = anchors.insert(rI, Rectangle(anchorStart, anchorEnd, color));
         (*rI).draw();
         // Todo | add flood fill
         std::advance(ittp, 1);
         std::advance(rI, 1);
     }
+}
+
+Anchor Shape::inAnchors(Point point) {
+    std::list<Rectangle>::iterator rI = this->anchors.begin();
+    int i, size = this->anchors.size();
+
+    for (i = 0; i < size; i++) {
+        if ((*rI).isInBoundary(point)) {
+            return (static_cast<Anchor>(i));
+        }
+        std::advance(rI, 1);
+    }
+
+    return Anchor::NONE;
 }

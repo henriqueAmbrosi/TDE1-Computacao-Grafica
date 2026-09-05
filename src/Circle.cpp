@@ -54,8 +54,9 @@ void Circle::displayBresenhamCircle(int xc,int yc, int x, int y, Color color) {
 }
 
 void Circle::draw() {
-    int x = 0, y = radius;
-    int decisionParameter = 3 - 2 * radius;
+    int scaledRadius = (int) radius * this->getScale()[0];
+    int x = 0, y = scaledRadius;
+    int decisionParameter = 3 - 2 * scaledRadius;
     displayBresenhamCircle(center.getX(), center.getY(), x, y, color);
  
     while (y >= x) {
@@ -90,4 +91,10 @@ void Circle::drawBoundary(Color color) {
 
 bool Circle::isInBoundary(Point point) {
     return sqrt(pow(point.getX() - this->center.getX(), 2) + pow(point.getY() - this->center.getY(), 2)) <= this->radius;
+}
+
+void Circle::getLocalSize(float& width, float& height)
+{
+    width = (float) (this->radius * 2);
+    height = (float) (this->radius * 2);
 }

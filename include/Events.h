@@ -19,6 +19,7 @@ private:
     void handleKeyDown(SDL_KeyboardEvent& keyEvent);
     void handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent);
     void handleMouseMotion(SDL_MouseMotionEvent& motionEvent);
+    void handleMouseButtonDown(SDL_MouseButtonEvent& mouseEvent);
 
     std::list<Point> tempPolygonPoints;
     std::list<std::shared_ptr<Drawable>> tempPolygonLines;

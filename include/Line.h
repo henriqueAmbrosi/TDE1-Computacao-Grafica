@@ -26,6 +26,7 @@ public:
     void draw() override;
     void drawBoundary(Color color) override;
     bool isInBoundary(Point point) override;
+    void getLocalSize(float& width, float& height) override;
 
     Point getStart() { return start; }
     Point getEnd() { return end; }

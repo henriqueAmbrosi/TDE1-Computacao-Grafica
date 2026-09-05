@@ -13,6 +13,7 @@ class Rectangle : public Shape
         void draw() override;
         void drawBoundary(Color color) override;
         bool isInBoundary(Point point) override;
+        void getLocalSize(float& width, float& height) override;
         void drawWithPivot(Point pivot);
         void setColor(Color c);
         Color getColor();

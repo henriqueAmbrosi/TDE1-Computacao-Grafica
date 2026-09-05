@@ -11,6 +11,7 @@
 #include "BezierCurve.h"
 #include <stdio.h>
 #include <memory>
+#include <algorithm>
 
 Events::Events()
 {
@@ -44,6 +45,11 @@ bool Events::pollEvents()
             case SDL_MOUSEBUTTONUP:
                 handleMouseButtonUp(event.button);
                 break;
+
+            case SDL_MOUSEBUTTONDOWN:
+                handleMouseButtonDown(event.button);
+                break;
+
 
             default:
                 break;
@@ -151,7 +157,57 @@ void Events::handleKeyDown(SDL_KeyboardEvent& keyEvent)
 
 void Events::handleMouseMotion(SDL_MouseMotionEvent& motionEvent)
 {
-
+    if (Context::getInstance()->isResizing()) {
+        Point currentPoint = Point(motionEvent.x, motionEvent.y);
+        Context* ctx = Context::getInstance();
+        std::shared_ptr<Shape> shape = ctx->getSelectedFigure();
+        Point init = ctx->getInitalResizePoint();
+        int dx = currentPoint.getX() - init.getX();
+        int dy = currentPoint.getY() - init.getY();
+    
+        switch (ctx->getResizeAnchor()) {
+            case Anchor::TOP_LEFT:
+                dx = dx;
+                dy = dy;
+                break;
+            case Anchor::TOP_RIGHT:
+                dy = dy;
+                break;
+            case Anchor::BOTTOM_LEFT:
+                dx = -dx;
+                break;
+            case Anchor::BOTTOM_RIGHT:
+                dx = std::abs(dx);
+            default:
+                break;
+        }
+    
+        float startSx = ctx->getResizeStartScaleX();
+        float startSy = ctx->getResizeStartScaleY();
+        float refW = std::max(ctx->getResizeRefWidth(), 1.0f);
+        float refH = std::max(ctx->getResizeRefHeight(), 1.0f);
+    
+        float kx = 1.0f + (float) (dx) / refW;
+        float ky = 1.0f + (float) (dy) / refH;
+    
+        if (std::dynamic_pointer_cast<Circle>(shape)) {
+            float k = 0.5f * (kx + ky);
+            kx = k;
+            ky = k;
+        }
+    
+        float scaleX = startSx * kx;
+        float scaleY = startSy * ky;
+    
+        const float minScale = 0.05f;
+        if (scaleX < minScale) {
+            scaleX = minScale;
+        }
+        if (scaleY < minScale) {
+            scaleY = minScale;
+        }
+    
+        shape->setScale(scaleX, scaleY);    }
 }
 
 void Events::finishCurve() {
@@ -163,6 +219,37 @@ void Events::finishCurve() {
 
     Context::getInstance()->addDrawable(curve);
     printf("Curve completed with success!\n");
+}
+
+void Events::handleMouseButtonDown(SDL_MouseButtonEvent& mouseEvent)
+{
+    Tool activeTool = Context::getInstance()->getSelectedTool();
+    Point clickPoint(mouseEvent.x, mouseEvent.y);
+
+    if (mouseEvent.button == SDL_BUTTON_LEFT) {
+        if (activeTool == Tool::SELECT) {
+                std::shared_ptr<Shape> selected = Context::getInstance()->getSelectedFigure();
+                if (!selected) {
+                    return;
+                }
+
+                Anchor anchor = selected->inAnchors(clickPoint);
+                if (anchor == Anchor::NONE) {
+                    return;
+                }
+
+                float localW = 1.0f;
+                float localH = 1.0f;
+                selected->getLocalSize(localW, localH);
+
+                Context::getInstance()->setIsResizing(true);
+                Context::getInstance()->setInitialResizePoint(clickPoint);
+                Context::getInstance()->setResizeAnchor(anchor);
+                Context::getInstance()->setResizeStartScale(selected->getScale()[0], selected->getScale()[1]);
+                Context::getInstance()->setResizeRefSize(localW, localH);
+                printf("Clicou na âncora\n");
+        }
+    }
 }
 
 void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
@@ -240,8 +327,12 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                 break;
             }
             case Tool::SELECT: {
-                bool found = false;
+                if (Context::getInstance()->isResizing()) {
+                    Context::getInstance()->setIsResizing(false);
+                    break;
+                }
 
+                bool found = false;
                 for (const std::shared_ptr<Drawable>& drawable : Context::getInstance()->getDrawables()) {
                     std::shared_ptr<Shape> shape = std::dynamic_pointer_cast<Shape>(drawable);
 
@@ -249,6 +340,7 @@ void Events::handleMouseButtonUp(SDL_MouseButtonEvent& mouseEvent)
                         Context::getInstance()->setSelectedFigure(shape);
                         printf("Shape selected!\n");
                         found = true;
+
                         break;
                     }
                 }

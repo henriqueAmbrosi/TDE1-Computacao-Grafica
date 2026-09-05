@@ -5,6 +5,16 @@
 #include "Drawable.h"
 #include <list>
 
+enum class Anchor {
+    NONE = -1,
+    TOP_LEFT = 0,
+    TOP_RIGHT = 1,
+    BOTTOM_LEFT = 2,
+    BOTTOM_RIGHT = 3
+};
+
+class Rectangle;
+
 class Shape: public Drawable
 {
     public:
@@ -18,13 +28,14 @@ class Shape: public Drawable
         Point getTranslation();
         float getRotation();
         float* getScale();
-
+        virtual void getLocalSize(float& width, float& height);
+        Anchor inAnchors(Point point);
         
         // Abstract interface
         virtual void draw() override = 0;
         virtual void drawBoundary(Color color) = 0;
         virtual bool isInBoundary(Point point) = 0;
-
+        
         virtual ~Shape();
 
     protected:
@@ -36,6 +47,7 @@ class Shape: public Drawable
     private:
         float scale[2] = { 1.0f, 1.0f };
         float rotation = 0.0f;
+        std::list<Rectangle> anchors;
         Point translation;
 
         double toRadians(double degrees);

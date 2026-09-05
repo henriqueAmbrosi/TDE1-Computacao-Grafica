@@ -14,6 +14,7 @@ class Polygon : public Shape
         void draw() override;
         void drawWithPivot(Point pivot);
         bool isInBoundary(Point point);
+        void getLocalSize(float& width, float& height) override;
         void drawBoundary(Color color);
 
     protected:

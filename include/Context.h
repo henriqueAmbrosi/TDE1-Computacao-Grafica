@@ -48,6 +48,22 @@ public:
     void addDrawable(std::shared_ptr<Drawable> drawable);
     void removeDrawable(std::shared_ptr<Drawable> drawable);
 
+    bool isMenuVisible();
+    void setMenuVisible(bool menuVisible);
+
+    bool isResizing();
+    void setIsResizing(bool isResizing);
+    void setInitialResizePoint(Point point);
+    Point getInitalResizePoint();
+    void setResizeAnchor(Anchor anchor);
+    Anchor getResizeAnchor();
+    void setResizeStartScale(float x, float y);
+    float getResizeStartScaleX();
+    float getResizeStartScaleY();
+    void setResizeRefSize(float width, float height);
+    float getResizeRefWidth();
+    float getResizeRefHeight();
+
 private:
     Context();
     ~Context();
@@ -61,6 +77,14 @@ private:
     ToolMenu toolMenu;
     std::shared_ptr<Shape> selectedFigure;
     std::list<std::shared_ptr<Drawable>> drawables;
+    bool menuVisible;
+    bool resizing;
+    Point initialResizePoint;
+    Anchor resizeAnchor;
+    float resizeStartScaleX;
+    float resizeStartScaleY;
+    float resizeRefWidth;
+    float resizeRefHeight;
 };
 
 #endif // CONTEXT_H

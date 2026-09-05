@@ -3,6 +3,7 @@
 #include "Line.h"
 #include "Color.h"
 #include <stdio.h>
+#include <cstdlib>
 
 Rectangle::Rectangle() {
     this->antialias = 0;
@@ -135,5 +136,14 @@ void Rectangle::drawBoundary(Color color)
 
 bool Rectangle::isInBoundary(Point point)
 {
+    if (this->inAnchors(point) != Anchor::NONE) {
+        return true;
+    }
     return point.getX() >= start.getX() && point.getX() <= end.getX() && point.getY() >= start.getY() && point.getY() <= end.getY();
+}
+
+void Rectangle::getLocalSize(float& width, float& height)
+{
+    width = (float) (std::abs(end.getX() - start.getX()));
+    height = (float) (std::abs(end.getY() - start.getY()));
 }

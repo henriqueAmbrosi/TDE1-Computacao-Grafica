@@ -4,6 +4,7 @@
 #include "Rectangle.h"
 #include "Line.h"
 #include <list>
+#include <algorithm>
 
 Polygon::Polygon(std::list<Point> points, Color color)
 {
@@ -134,5 +135,33 @@ bool Polygon::isInBoundary(Point point) {
         std::advance(itlp, 1);
     }
 
+    if (this->inAnchors(point) != Anchor::NONE) {
+        return true;
+    }
+
     return point.getX() >= minX && point.getX() <= maxX && point.getY() >= minY && point.getY() <= maxY;
+}
+
+void Polygon::getLocalSize(float& width, float& height)
+{
+    if (this->points.empty()) {
+        width = 1.0f;
+        height = 1.0f;
+        return;
+    }
+
+    int minX = this->points.front().getX();
+    int maxX = minX;
+    int minY = this->points.front().getY();
+    int maxY = minY;
+
+    for (Point p : this->points) {
+        if (p.getX() < minX) minX = p.getX();
+        if (p.getX() > maxX) maxX = p.getX();
+        if (p.getY() < minY) minY = p.getY();
+        if (p.getY() > maxY) maxY = p.getY();
+    }
+
+    width = static_cast<float>(std::max(1, maxX - minX));
+    height = static_cast<float>(std::max(1, maxY - minY));
 }

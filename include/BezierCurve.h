@@ -13,6 +13,7 @@ class BezierCurve : public Shape
         virtual ~BezierCurve();
         void draw() override;
         bool isInBoundary(Point point);
+        void getLocalSize(float& width, float& height) override;
         void drawBoundary(Color color);
         void setPixel(int x, int y, Color color);
         void setPixel(int x, int y, int r, int g, int b);
